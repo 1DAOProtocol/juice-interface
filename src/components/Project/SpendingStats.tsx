@@ -1,12 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
+import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import ETHToUSD from 'components/currency/ETHToUSD'
-import CurrencySymbol from 'components/CurrencySymbol'
 import TooltipLabel from 'components/TooltipLabel'
 import { CurrencyName } from 'constants/currency'
 import { formatWad } from 'utils/format/formatNumber'
-import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 
 export default function SpendingStats({
   currency,
@@ -24,9 +24,9 @@ export default function SpendingStats({
   feePercentage: string | undefined
   hasFundingTarget: boolean | undefined
 }) {
-  const formattedDistributionLimit = !targetAmount.eq(MAX_DISTRIBUTION_LIMIT)
-    ? formatWad(targetAmount, { precision: 4 })
-    : t`NO LIMIT`
+  const formattedDistributionLimit = isInfiniteDistributionLimit(targetAmount)
+    ? t`NO LIMIT`
+    : formatWad(targetAmount, { precision: 4 })
 
   return (
     <div>
@@ -39,8 +39,10 @@ export default function SpendingStats({
           }
         >
           <span className="text-primary font-medium">
-            <CurrencySymbol currency={currency} />
-            {formatWad(distributableAmount, { precision: 4 }) || '0'}{' '}
+            <AmountInCurrency
+              amount={distributableAmount}
+              currency={currency}
+            />{' '}
           </span>
         </Tooltip>
         <TooltipLabel
@@ -58,10 +60,9 @@ export default function SpendingStats({
 
       <div className="cursor-default text-xs font-medium text-grey-500 dark:text-slate-100">
         <Trans>
-          <CurrencySymbol currency={currency} />
-          {formatWad(distributedAmount, { precision: 4 }) || '0'}
+          <AmountInCurrency amount={distributedAmount} currency={currency} />
           {hasFundingTarget ? (
-            <span>/{formattedDistributionLimit} </span>
+            <span>/{formattedDistributionLimit}</span>
           ) : null}{' '}
           distributed
         </Trans>

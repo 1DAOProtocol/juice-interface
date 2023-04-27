@@ -8,8 +8,9 @@
 
 .ant-drawer-header {
   @apply bg-l0;
+  @apply border-b-0;
 }
 
 .ant-drawer {
-  z-index: 1;
+  z-index: 20 !important;
 }

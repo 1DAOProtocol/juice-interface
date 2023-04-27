@@ -13,7 +13,7 @@ export default function V2V3ProjectHandleLink({
   handle,
 }: {
   className?: string
-  name?: string
+  name?: string | null
   projectId: number
   handle?: string | null
 }) {
@@ -25,6 +25,7 @@ export default function V2V3ProjectHandleLink({
 
   return (
     <Link
+      prefetch={false}
       href={v2v3ProjectRoute({ projectId })}
       as={v2v3ProjectRoute({ projectId, handle: resolvedHandle })}
     >

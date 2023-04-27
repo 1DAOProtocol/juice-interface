@@ -89,6 +89,8 @@ SUPABASE_JWT_SECRET=<FROM_CLI - JWT secret>
 
 Locally, you can ignore `SUPABASE_PROJECT_ID`.
 
+During local dev without a cron, the update routine endpoint /api/projects/update must be called anytime a database is restarted, or when changes to projects need to be reflected in the database.
+
 ## Usage
 
 1. Run the app in dev mode
@@ -137,3 +139,32 @@ Once set up, every transaction that you submit will be simulated using Tenderly.
 When a simulation fails, an error is logged to the development console. This log contains a link to the simulation in Tenderly.
 
 > Note: there is a 50 simulation per month limit per account.
+
+# Testing
+
+## Unit tests
+
+Run the jest test suite using the following command:
+
+```bash
+yarn test
+```
+
+## End-to-end tests
+
+### Running Cypress
+
+1. Start the app in a separate terminal:
+
+   ```bash
+   yarn build && yarn start
+   # Alternatively, you can use `yarn dev` for testing
+   ```
+
+1. Open Cypress.
+
+   ```bash
+   yarn cy:open
+   ```
+
+1. Run tests.

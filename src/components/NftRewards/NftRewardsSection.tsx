@@ -1,8 +1,7 @@
 import { t, Trans } from '@lingui/macro'
-import { Space } from 'antd'
 import {
-  NftPostPayModal,
   NFT_PAYMENT_CONFIRMED_QUERY_PARAM,
+  NftPostPayModal,
 } from 'components/NftRewards/NftPostPayModal'
 import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
 import SectionHeader from 'components/SectionHeader'
@@ -11,7 +10,6 @@ import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import { useContext } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { sortNftsByContributionFloor, sumTierFloors } from 'utils/nftRewards'
@@ -67,8 +65,6 @@ export function NftRewardsSection() {
   const converter = useCurrencyConverter()
   const payAmountETH =
     payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
-
-  const { value: hasNftRewards } = useHasNftRewards()
 
   const handleTierDeselect = (
     tierId: number | undefined,
@@ -129,16 +125,12 @@ export function NftRewardsSection() {
     }
   }
 
-  if (!hasNftRewards) {
-    return null
-  }
-
   const renderRewardTiers = rewardTiers
     ? sortNftsByContributionFloor(rewardTiers)
     : []
 
   return (
-    <Space direction="vertical" size="large" className="w-full">
+    <div className="flex flex-col gap-6">
       <Header />
 
       {nftsLoading ? (
@@ -184,6 +176,6 @@ export function NftRewardsSection() {
           config={projectMetadata.nftPaymentSuccessModal}
         />
       )}
-    </Space>
+    </div>
   )
 }

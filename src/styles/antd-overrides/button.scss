@@ -1,6 +1,6 @@
 .ant-btn {
   background: transparent;
-  @apply border-bluebs-500 dark:border-slate-300;
+  @apply border-bluebs-600 dark:border-slate-300;
   @apply text-over-action-secondary;
   @apply font-medium;
   @apply rounded-lg;
@@ -43,6 +43,7 @@
 
 .ant-btn-icon-only {
   @apply px-0;
+  @apply justify-center;
   &:hover {
     @apply bg-transparent dark:bg-transparent;
   }
@@ -137,4 +138,9 @@
 
 .ant-upload.ant-upload-select-picture-card:hover {
   @apply stroke-action-primary;
+}
+
+a.ant-btn:not(.ant-btn-link) {
+  line-height: 30px;
+  padding-top: 4px !important;
 }

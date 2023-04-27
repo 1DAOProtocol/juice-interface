@@ -1,7 +1,7 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Form, Space, Tooltip } from 'antd'
+import { Form, Tooltip } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { Callout } from 'components/Callout'
 import ETHToUSD from 'components/currency/ETHToUSD'
@@ -11,12 +11,11 @@ import TransactionModal from 'components/TransactionModal'
 import SplitList from 'components/v2v3/shared/SplitList'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
 import { useDistributePayoutsTx } from 'hooks/v2v3/transactor/DistributePayouts'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useEffect, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
-import { V2V3CurrencyName, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
+import { V2V3_CURRENCY_USD, V2V3CurrencyName } from 'utils/v2v3/currency'
 import { FEES_EXPLANATION } from '../settingExplanations'
 
 export default function DistributePayoutsModal({
@@ -42,7 +41,6 @@ export default function DistributePayoutsModal({
   const [distributionAmount, setDistributionAmount] = useState<string>()
 
   const distributePayoutsTx = useDistributePayoutsTx()
-  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
   const converter = useCurrencyConverter()
 
   useEffect(() => {
@@ -95,8 +93,6 @@ export default function DistributePayoutsModal({
     }
   }
 
-  if (!ETHPaymentTerminalFee) return null
-
   const distributionCurrencyName = V2V3CurrencyName(
     distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
   )
@@ -133,7 +129,7 @@ export default function DistributePayoutsModal({
       connectWalletText={t`Connect wallet to send payouts`}
       width={640}
     >
-      <Space direction="vertical" size="large" className="w-full">
+      <div className="flex flex-col gap-6">
         <Callout.Info>{FEES_EXPLANATION}</Callout.Info>
 
         <Form layout="vertical">
@@ -200,11 +196,11 @@ export default function DistributePayoutsModal({
             showFees
           />
         </div>
-        <p className="text-sm">
-          <ExclamationCircleOutlined />{' '}
+        <p className="flex items-center gap-1 text-sm">
+          <ExclamationCircleOutlined />
           <Trans>Recipients will receive payouts in ETH.</Trans>
         </p>
-      </Space>
+      </div>
     </TransactionModal>
   )
 }

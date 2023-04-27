@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AllocationSplit } from 'components/Allocation'
 import { projectTokenSettingsToReduxFormat } from 'components/Create/utils/projectTokenSettingsToReduxFormat'
+import { AllocationSplit } from 'components/v2v3/shared/Allocation'
 import { CreatePage } from 'models/createPage'
 import {
   JB721GovernanceType,
@@ -9,6 +9,7 @@ import {
   NftRewardTier,
 } from 'models/nftRewards'
 import { PayoutsSelection } from 'models/payoutsSelection'
+import { ProjectTagName } from 'models/project-tags'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 import { Split } from 'models/splits'
@@ -68,6 +69,9 @@ const editingV2ProjectSlice = createSlice({
     },
     setDescription: (state, action: PayloadAction<string>) => {
       state.projectMetadata.description = action.payload
+    },
+    setTags: (state, action: PayloadAction<ProjectTagName[]>) => {
+      state.projectMetadata.tags = action.payload
     },
     setFundingCycleData: (
       state,

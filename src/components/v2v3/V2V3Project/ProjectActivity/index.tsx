@@ -1,6 +1,6 @@
-import { DownloadOutlined } from '@ant-design/icons'
+import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import { t, Trans } from '@lingui/macro'
-import { Button, Divider, Select, Space } from 'antd'
+import { Button, Divider, Select } from 'antd'
 import AddToBalanceEventElem from 'components/activityEventElems/AddToBalanceEventElem'
 import BurnEventElem from 'components/activityEventElems/BurnEventElem'
 import DeployedERC20EventElem from 'components/activityEventElems/DeployedERC20EventElem'
@@ -94,7 +94,7 @@ export default function ProjectActivity() {
 
           return (
             <div
-              className="mb-5 border-x-0 border-t-0 border-b border-solid border-smoke-200 pb-5 dark:border-grey-600"
+              className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
               key={e.id}
             >
               {elem}
@@ -128,7 +128,7 @@ export default function ProjectActivity() {
     if (hasNextPage) {
       return (
         <div className="text-center">
-          <Button onClick={() => fetchNextPage()} type="text" className="px-0">
+          <Button onClick={() => fetchNextPage()} type="link" className="px-0">
             <Trans>Load more</Trans>
           </Button>
         </div>
@@ -147,17 +147,17 @@ export default function ProjectActivity() {
       <div className="mb-5 flex items-start justify-between">
         <SectionHeader className="m-0" text={t`Activity`} />
 
-        <Space direction="horizontal" align="center" size="small">
+        <div className="flex gap-2">
           {count > 0 && (
             <Button
               type="text"
-              icon={<DownloadOutlined />}
+              icon={<ArrowDownTrayIcon className="inline h-5 w-5" />}
               onClick={() => setDownloadModalVisible(true)}
             />
           )}
 
           <Select
-            className="w-[200px]"
+            className="w-[200px] text-start"
             value={eventFilter}
             onChange={val => setEventFilter(val)}
           >
@@ -198,7 +198,7 @@ export default function ProjectActivity() {
               <Trans>Created project</Trans>
             </Select.Option>
           </Select>
-        </Space>
+        </div>
       </div>
 
       {list}

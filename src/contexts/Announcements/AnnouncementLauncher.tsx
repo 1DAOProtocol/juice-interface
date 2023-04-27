@@ -1,21 +1,19 @@
-import { announcements } from 'constants/announcements'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { Announcements } from 'constants/announcements'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
 import { Announcement } from 'models/announcement'
 import { useRouter } from 'next/router'
 import React, { useCallback, useContext, useEffect } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 
+import { useWallet } from 'hooks/Wallet'
 import { AnnouncementsContext } from './AnnouncementsContext'
 
 /**
  * Responsible for launching announcements. This component may be instantiated in multiple places in the app component tree based on data availability.
  */
 export const AnnouncementLauncher: React.FC = ({ children }) => {
-  const announcementsEnabled = featureFlagEnabled(FEATURE_FLAGS.ANNOUNCEMENTS)
-
+  const wallet = useWallet()
   const { owner } = useContext(V1ProjectContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
   const isProjectOwner = useIsUserAddress(owner ?? projectOwnerAddress)
@@ -26,20 +24,18 @@ export const AnnouncementLauncher: React.FC = ({ children }) => {
   const shouldActivateAnnouncement = useCallback(
     (a: Announcement) => {
       // Don't activate if expired
-      if (a.expire && a.expire > Date.now().valueOf()) return false
+      if (a.expire && a.expire < Date.now().valueOf()) return false
 
-      return a.conditions.every(c => c({ router, isProjectOwner }))
+      return a.conditions.every(c => c({ router, isProjectOwner, wallet }))
     },
-    [router, isProjectOwner],
+    [router, isProjectOwner, wallet],
   )
 
   // Try activating any announcements
   useEffect(() => {
-    if (!announcementsEnabled || !setActiveId) return
-
     // Activate first announcement that fits conditions
-    setActiveId(announcements.find(shouldActivateAnnouncement)?.id)
-  }, [shouldActivateAnnouncement, announcementsEnabled, setActiveId])
+    setActiveId(Announcements.find(shouldActivateAnnouncement)?.id)
+  }, [shouldActivateAnnouncement, setActiveId])
 
   return <>{children}</>
 }

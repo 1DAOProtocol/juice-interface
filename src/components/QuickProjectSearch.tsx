@@ -3,28 +3,24 @@ import {
   ArrowRightOutlined,
   ArrowUpOutlined,
   EnterOutlined,
-  SearchOutlined,
 } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
+import { Trans, t } from '@lingui/macro'
 import Input from 'antd/lib/input/Input'
 import Modal from 'antd/lib/modal/Modal'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V2 } from 'constants/pv'
 import { useModal } from 'hooks/Modal'
-import { useProjectsSearch, useSepanaProjectsSearch } from 'hooks/Projects'
+import { useDBProjectsQuery } from 'hooks/Projects'
 import { trackFathomGoal } from 'lib/fathom'
-import { SepanaProject } from 'models/sepana'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { featureFlagEnabled } from 'utils/featureFlags'
-import { formatWad } from 'utils/format/formatNumber'
 import { v2v3ProjectRoute } from 'utils/routes'
 
 import { TOP_NAV } from 'constants/fathomEvents'
-import CurrencySymbol from './CurrencySymbol'
 import Loading from './Loading'
 import { ProjectVersionBadge } from './ProjectVersionBadge'
+import ETHAmount from './currency/ETHAmount'
 import V1ProjectHandle from './v1/shared/V1ProjectHandle'
 import V2V3ProjectHandleLink from './v2v3/shared/V2V3ProjectHandleLink'
 
@@ -56,21 +52,15 @@ export default function QuickProjectSearch({
     }
   }, [inputText])
 
-  const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
-
-  const { data: sepanaSearchResults, isLoading: isLoadingSepanaSearch } =
-    useSepanaProjectsSearch(searchText, {
+  const { data: searchResults, isLoading } = useDBProjectsQuery(
+    {
+      text: searchText,
       pageSize: MAX_RESULTS,
-      enabled: sepanaEnabled,
-    })
-
-  const { data: graphSearchResults, isLoading: isLoadingGraphSearch } =
-    useProjectsSearch(searchText, { enabled: !sepanaEnabled })
-
-  const searchResults = sepanaEnabled ? sepanaSearchResults : graphSearchResults
-  const isLoadingSearch = sepanaEnabled
-    ? isLoadingSepanaSearch
-    : isLoadingGraphSearch
+    },
+    {
+      enabled: modal.visible,
+    },
+  )
 
   const goToProject = useCallback(() => {
     if (highlightIndex === undefined || !searchResults?.length) return
@@ -134,7 +124,7 @@ export default function QuickProjectSearch({
   // Arrow key up/down & tab listener
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
-      if (!searchResults || isLoadingSearch) return
+      if (!searchResults || isLoading) return
 
       switch (e.key) {
         case 'ArrowUp':
@@ -154,27 +144,28 @@ export default function QuickProjectSearch({
     return () => {
       window.removeEventListener('keydown', listener)
     }
-  }, [
-    modal.visible,
-    searchText,
-    router,
-    goToProject,
-    searchResults,
-    isLoadingSearch,
-  ])
+  }, [modal.visible, searchText, router, goToProject, searchResults, isLoading])
 
   return (
     <>
-      <SearchOutlined
-        className={twMerge(
-          'mt-1 text-2xl leading-none transition-colors hover:text-bluebs-500',
-          className,
-        )}
+      <div
+        className="flex cursor-pointer items-center gap-4"
         onClick={() => {
           modal.open()
           trackFathomGoal(TOP_NAV.SEARCH_CTA)
         }}
-      />
+      >
+        <MagnifyingGlassIcon
+          className={twMerge(
+            'h-6 w-6 transition-colors hover:text-bluebs-300',
+            className,
+          )}
+        />
+
+        <span className="font-medium md:hidden">
+          <Trans>Search</Trans>
+        </span>
+      </div>
       <Modal
         closable={false}
         className="top-16"
@@ -191,7 +182,7 @@ export default function QuickProjectSearch({
           <div className="flex items-center gap-5 rounded-lg px-5 pb-2 pt-8">
             <Input
               prefix={
-                <SearchOutlined className="mt-1 mr-2 text-2xl leading-none" />
+                <MagnifyingGlassIcon className="mt-1 mr-2 h-6 w-6 text-2xl leading-none" />
               }
               allowClear
               className="border-smoke-300 text-black dark:border-slate-300 dark:text-slate-100 dark:placeholder:text-slate-300"
@@ -203,7 +194,7 @@ export default function QuickProjectSearch({
           </div>
 
           <div hidden={!searchText}>
-            {isLoadingSearch && <Loading />}
+            {isLoading && <Loading />}
 
             {!!searchResults?.length && (
               <div className="flex flex-col">
@@ -223,9 +214,7 @@ export default function QuickProjectSearch({
                       <V2V3ProjectHandleLink
                         projectId={p.projectId}
                         handle={p.handle}
-                        name={
-                          sepanaEnabled ? (p as SepanaProject).name : undefined
-                        }
+                        name={p.name}
                       />
                     ) : (
                       <V1ProjectHandle
@@ -235,12 +224,11 @@ export default function QuickProjectSearch({
                     )}
 
                     <div className="text-xs font-medium text-slate-200 dark:text-slate-200">
-                      <CurrencySymbol currency="ETH" />
-                      {formatWad(p.totalPaid, { precision: 0 })}
+                      <ETHAmount amount={p.totalPaid} precision={0} />
                     </div>
 
                     <ProjectVersionBadge
-                      className="text-slate-200 dark:text-slate-300"
+                      className="text-secondary"
                       transparent
                       size="small"
                       versionText={`V${p.pv}`}
@@ -254,14 +242,14 @@ export default function QuickProjectSearch({
               </div>
             )}
 
-            {searchText && !isLoadingSearch && searchResults?.length === 0 && (
+            {searchText && !isLoading && searchResults?.length === 0 && (
               <div className="text-center text-grey-400">
                 <Trans>No results</Trans>
               </div>
             )}
           </div>
 
-          <div className="mt-5 flex gap-6 rounded-b-lg border-t border-r-0 border-b-0 border-l-0 border-solid border-t-smoke-200 bg-smoke-75 py-4 px-5 text-xs dark:border-t-slate-300 dark:bg-slate-600">
+          <div className="mt-5 flex gap-6 rounded-b-lg border-t border-t-smoke-200 bg-smoke-75 py-4 px-5 text-xs dark:border-t-slate-300 dark:bg-slate-600">
             <span>
               <KeyboardButton>
                 <EnterOutlined />

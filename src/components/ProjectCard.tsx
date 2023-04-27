@@ -8,27 +8,20 @@ import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { useProjectHandleText } from 'hooks/ProjectHandleText'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
+import { ProjectTagName } from 'models/project-tags'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
 import { formatDate } from 'utils/format/formatDate'
 import { v2v3ProjectRoute } from 'utils/routes'
-import ETHAmount from './currency/ETHAmount'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
-
-export const PROJECT_CARD_BG = 'bg-white dark:bg-slate-600'
+import { ProjectTagsList } from './ProjectTags/ProjectTagsList'
+import ETHAmount from './currency/ETHAmount'
 
 export type ProjectCardProject = Pick<
   Project,
-  | 'id'
-  | 'handle'
-  | 'metadataUri'
-  | 'totalPaid'
-  | 'createdAt'
-  | 'terminal'
-  | 'projectId'
-  | 'pv'
->
+  'id' | 'handle' | 'totalPaid' | 'createdAt' | 'terminal' | 'projectId' | 'pv'
+> & { tags?: ProjectTagName[] | null; metadataUri: string | null }
 
 function ArchivedBadge() {
   return (
@@ -125,11 +118,13 @@ export default function ProjectCard({
       V2ArchivedProjectIds.includes(projectCardData.projectId)) ||
     metadata?.archived
 
+  const tags = (project as ProjectCardProject).tags
+
   return (
-    <Link href={projectCardHref} as={projectCardUrl}>
+    <Link href={projectCardHref} as={projectCardUrl} prefetch={false}>
       <a>
         <div
-          className={`relative flex cursor-pointer items-center overflow-hidden whitespace-pre rounded-lg py-4 md:border md:border-solid md:border-smoke-300 md:py-6 md:px-5 md:transition-colors md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100 ${PROJECT_CARD_BG}`}
+          className={`relative flex cursor-pointer items-center overflow-hidden whitespace-pre rounded-lg bg-white py-4 dark:bg-slate-600 md:border md:border-smoke-300 md:py-6 md:px-5 md:transition-colors md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100`}
         >
           <div className="mr-5">
             <ProjectLogo
@@ -137,11 +132,12 @@ export default function ProjectCard({
               uri={metadata?.logoUri}
               name={metadata?.name}
               projectId={projectCardData.projectId}
+              lazyLoad
             />
           </div>
-          <div className="min-w-0 flex-1 font-normal">
+          <div className="min-w-0 flex-1 overflow-hidden overflow-ellipsis font-normal">
             {metadata ? (
-              <span className="m-0 overflow-hidden overflow-ellipsis font-heading text-xl leading-8 text-black dark:text-slate-100">
+              <span className="m-0 font-heading text-xl leading-8 text-black dark:text-slate-100">
                 {metadata.name}
               </span>
             ) : (
@@ -169,13 +165,19 @@ export default function ProjectCard({
               </span>
             </div>
 
-            {metadata?.description && (
+            {tags?.length ? (
+              <div className="mt-1">
+                <ProjectTagsList
+                  tagClassName="text-xs text-grey-400 dark:text-slate-200 border-solid border border-grey-400 dark:border-slate-200 bg-transparent"
+                  tags={tags}
+                />
+              </div>
+            ) : metadata?.description ? (
               <div className="max-h-5 overflow-hidden overflow-ellipsis text-grey-400 dark:text-slate-200">
                 {metadata.description}
               </div>
-            )}
+            ) : null}
           </div>
-
           {isArchived && <ArchivedBadge />}
           {!metadata && <Loading />}
         </div>

@@ -1,6 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
-import { Space } from 'antd'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
@@ -29,12 +28,13 @@ export default function FundingCycleDetails({
   mintRateZeroAsUnchanged?: boolean
 }) {
   return (
-    <Space className="w-full" direction="vertical" size="middle">
+    <div className="flex flex-col gap-4">
       <FundingCycleDetailsRow
         header={t`Cycle`}
         items={
           <FundingCycleListItems
             fundingCycle={fundingCycle}
+            fundingCycleMetadata={fundingCycleMetadata}
             distributionLimit={distributionLimit}
             distributionLimitCurrency={distributionLimitCurrency}
             showDiffs={showDiffs}
@@ -56,7 +56,6 @@ export default function FundingCycleDetails({
         header={t`Other rules`}
         items={
           <RulesListItems
-            fundingCycle={fundingCycle}
             fundingCycleMetadata={fundingCycleMetadata}
             showDiffs={showDiffs}
           />
@@ -64,12 +63,12 @@ export default function FundingCycleDetails({
       />
       {!isZeroAddress(fundingCycleMetadata.dataSource) ? (
         <FundingCycleDetailsRow
-          header={t`Data source`}
+          header={t`Extension`}
           items={
             <DataSourceListItems fundingCycleMetadata={fundingCycleMetadata} />
           }
         />
       ) : null}
-    </Space>
+    </div>
   )
 }

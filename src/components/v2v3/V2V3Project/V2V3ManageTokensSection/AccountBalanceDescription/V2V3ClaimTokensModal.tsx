@@ -1,16 +1,20 @@
 import { WarningOutlined } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Descriptions, Form, Space } from 'antd'
+import { Descriptions, Form } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedAddress from 'components/FormattedAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { TokenAmount } from 'components/TokenAmount'
 import TransactionModal from 'components/TransactionModal'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import useUserUnclaimedTokenBalance from 'hooks/v2v3/contractReader/UserUnclaimedTokenBalance'
+import { useUnclaimedTokenBalance } from 'hooks/v2v3/contractReader/UnclaimedTokenBalance'
 import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
 import { useClaimTokensTx } from 'hooks/v2v3/transactor/ClaimTokensTx'
+import { useWallet } from 'hooks/Wallet'
 import { useContext, useLayoutEffect, useState } from 'react'
-import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
+import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -23,14 +27,20 @@ export function V2V3ClaimTokensModal({
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
+  const { projectId } = useContext(ProjectMetadataContext)
+  const { tokenSymbol, tokenAddress } = useContext(V2V3ProjectContext)
+
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [claimAmount, setClaimAmount] = useState<string>()
 
-  const { tokenSymbol, tokenAddress } = useContext(V2V3ProjectContext)
+  const { userAddress } = useWallet()
   const claimTokensTx = useClaimTokensTx()
   const hasIssuedTokens = useProjectHasErc20()
-  const { data: unclaimedBalance } = useUserUnclaimedTokenBalance()
+  const { data: unclaimedBalance } = useUnclaimedTokenBalance({
+    projectId,
+    userAddress,
+  })
 
   useLayoutEffect(() => {
     setClaimAmount(fromWad(unclaimedBalance))
@@ -95,7 +105,7 @@ export function V2V3ClaimTokensModal({
       width={600}
       centered
     >
-      <Space direction="vertical" size="large">
+      <div className="flex flex-col gap-6">
         {!hasIssuedTokens && (
           <div className="bg-smoke-100 p-2 dark:bg-slate-600">
             <WarningOutlined />{' '}
@@ -132,7 +142,7 @@ export function V2V3ClaimTokensModal({
           <Descriptions.Item
             label={<Trans>Your unclaimed {tokenTextLong}</Trans>}
           >
-            {formatWad(unclaimedBalance, { precision: 8 })}
+            <TokenAmount amountWad={unclaimedBalance ?? BigNumber.from(0)} />
           </Descriptions.Item>
 
           {hasIssuedTokens && tokenSymbol && (
@@ -162,7 +172,7 @@ export function V2V3ClaimTokensModal({
             />
           </Form.Item>
         </Form>
-      </Space>
+      </div>
     </TransactionModal>
   )
 }

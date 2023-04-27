@@ -1,6 +1,7 @@
 import { t } from '@lingui/macro'
 import FormattedAddress from 'components/FormattedAddress'
 import ProjectLogo from 'components/ProjectLogo'
+import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
 import { useAppSelector } from 'redux/hooks/AppSelector'
 import { ReviewDescription } from '../ReviewDescription'
 
@@ -16,6 +17,7 @@ export const ProjectDetailsReview = () => {
       payButton,
       payDisclosure,
       twitter,
+      tags,
     },
     inputProjectOwner,
   } = useAppSelector(state => state.editingV2Project)
@@ -86,6 +88,10 @@ export const ProjectDetailsReview = () => {
             </div>
           ) : null
         }
+      />
+      <ReviewDescription
+        title={t`Tags`}
+        desc={tags?.length ? <ProjectTagsList tags={tags} /> : t`No tags`}
       />
       <ReviewDescription
         title={t`Pay button text`}

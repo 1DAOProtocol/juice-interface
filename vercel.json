@@ -6,11 +6,11 @@
   },
   "crons": [
     {
-      "path": "/api/sepana/update",
+      "path": "/api/projects/update",
       "schedule": "*/6 * * * *"
     },
     {
-      "path": "/api/sepana/update-retry-ipfs",
+      "path": "/api/projects/update-retry-ipfs",
       "schedule": "0 8,20 * * *"
     }
   ]

@@ -2,13 +2,13 @@ import { Contract } from '@ethersproject/contracts'
 import { JB721DelegateVersion } from 'models/nftRewards'
 import { createContext } from 'react'
 
-export interface JB721DelegateContracts {
+interface JB721DelegateContracts {
   JB721TieredDelegate?: Contract
   JB721TieredDelegateStore?: Contract
 }
 
-export interface JB721DelegateContractsLoading {
-  JB721TieredDelegateStoreLoading?: boolean
+interface JB721DelegateContractsLoading {
+  JB721TieredDelegateStoreLoading: boolean
 }
 
 export const JB721DelegateContractsContext = createContext<{
@@ -17,6 +17,6 @@ export const JB721DelegateContractsContext = createContext<{
   version: JB721DelegateVersion | undefined
 }>({
   contracts: {},
-  loading: {},
+  loading: { JB721TieredDelegateStoreLoading: false },
   version: undefined,
 })

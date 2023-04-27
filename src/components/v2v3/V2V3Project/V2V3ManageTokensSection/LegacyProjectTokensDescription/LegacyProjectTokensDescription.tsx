@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
+import { TokenAmount } from 'components/TokenAmount'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useTotalLegacyTokenBalance } from 'hooks/JBV3Token/contractReader/TotalLegacyTokenBalance'
 import { useContext, useState } from 'react'
-import { formatWad } from 'utils/format/formatNumber'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { MigrateLegacyProjectTokensModal } from './MigrateLegacyProjectTokensModal'
 
 export function LegacyProjectTokensDescription() {
@@ -14,30 +14,33 @@ export function LegacyProjectTokensDescription() {
 
   const [modalOpen, setModalOpen] = useState<boolean>(false)
 
-  const legacyTokenBalance = useTotalLegacyTokenBalance({ projectId })
-
-  const tokenText = tokenSymbolText({
-    tokenSymbol,
-    capitalize: false,
-    plural: true,
-  })
+  const { totalLegacyTokenBalance, v1ClaimedBalance } =
+    useTotalLegacyTokenBalance({ projectId })
 
   return (
     <>
       <span>
-        {formatWad(legacyTokenBalance, { precision: 0 }) ?? 0} {tokenText}
+        <TokenAmount
+          amountWad={totalLegacyTokenBalance}
+          tokenSymbol={tokenSymbol}
+        />
       </span>
 
-      {legacyTokenBalance?.gt(0) && (
+      {totalLegacyTokenBalance?.gt(0) && (
         <>
           <Button size="small" onClick={() => setModalOpen(true)}>
             <Trans>Migrate tokens</Trans>
           </Button>
-          <MigrateLegacyProjectTokensModal
-            open={modalOpen}
-            legacyTokenBalance={legacyTokenBalance}
-            onCancel={() => setModalOpen(false)}
-          />
+          {modalOpen && (
+            <V1UserProvider>
+              <MigrateLegacyProjectTokensModal
+                open={modalOpen}
+                legacyTokenBalance={totalLegacyTokenBalance}
+                v1ClaimedBalance={v1ClaimedBalance}
+                onCancel={() => setModalOpen(false)}
+              />
+            </V1UserProvider>
+          )}
         </>
       )}
     </>

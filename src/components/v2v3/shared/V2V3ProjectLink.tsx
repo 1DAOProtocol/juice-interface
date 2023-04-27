@@ -1,10 +1,12 @@
 import { Trans } from '@lingui/macro'
-import { Space } from 'antd'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { AllocatorBadge } from './FundingCycleConfigurationDrawers/AllocatorBadge'
 
+/**
+ * Different from V2V3ProjectHandleLink in that it doesn't use the handle. This can be used outside of V2V3ContractsContext and V2V3ProjectContext.
+ */
 export default function V2V3ProjectLink({
   className,
   projectId,
@@ -15,7 +17,7 @@ export default function V2V3ProjectLink({
   allocator?: string
 }) {
   return (
-    <Space size="small">
+    <div className="flex gap-2">
       <Link href={v2v3ProjectRoute({ projectId })}>
         <a
           className={twMerge(
@@ -27,6 +29,6 @@ export default function V2V3ProjectLink({
         </a>
       </Link>
       {allocator && <AllocatorBadge allocator={allocator} />}
-    </Space>
+    </div>
   )
 }

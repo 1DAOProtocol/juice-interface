@@ -15,12 +15,6 @@ export const loadJuiceboxV3Contract = async (
         )) as ContractJson
         break
       }
-      case V2V3ContractName.JBController3_0_1: {
-        contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBController3_0_1.json`
-        )) as ContractJson
-        break
-      }
       case V2V3ContractName.JBController3_1: {
         contractJson = (await import(
           `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBController3_1.json`
@@ -96,12 +90,6 @@ export const loadJuiceboxV3Contract = async (
       case V2V3ContractName.JBETHERC20SplitsPayerDeployer: {
         contractJson = (await import(
           `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBETHERC20SplitsPayerDeployer.json`
-        )) as ContractJson
-        break
-      }
-      case V2V3ContractName.JBPrices: {
-        contractJson = (await import(
-          `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBPrices.json`
         )) as ContractJson
         break
       }

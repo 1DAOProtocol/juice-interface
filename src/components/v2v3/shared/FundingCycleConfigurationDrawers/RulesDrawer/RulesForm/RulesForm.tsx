@@ -1,6 +1,6 @@
 import { isAddress } from '@ethersproject/address'
 import { Trans } from '@lingui/macro'
-import { Button, Form, Space, Switch } from 'antd'
+import { Button, Form, Switch } from 'antd'
 import FormItemLabel from 'components/FormItemLabel'
 import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
 import {
@@ -14,8 +14,8 @@ import {
   USE_DATASOURCE_FOR_REDEEM_EXPLANATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import {
-  ballotStrategiesFn,
   DEFAULT_BALLOT_STRATEGY,
+  ballotStrategiesFn,
 } from 'constants/v2v3/ballotStrategies'
 import isEqual from 'lodash/isEqual'
 import { BallotStrategy } from 'models/ballot'
@@ -143,7 +143,7 @@ export default function RulesForm({
 
   return (
     <Form layout="vertical" onFinish={onFormSaved}>
-      <Space direction="vertical" size="large">
+      <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-5 rounded-sm bg-smoke-75 stroke-none p-8 shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:shadow-[10px_10px_0px_0px_#2D293A]">
           <div>
             <h3 className="text-black dark:text-slate-100">
@@ -212,7 +212,7 @@ export default function RulesForm({
             <h3 className="mb-5 text-black dark:text-slate-100">
               <Trans>Owner permissions</Trans>
             </h3>
-            <h4 className="mb-3 font-normal uppercase text-black dark:text-slate-100">
+            <h4 className="mb-3 font-heading text-lg font-normal text-black dark:text-slate-100">
               <Trans>Configuration rules</Trans>
             </h4>
             <Form.Item extra={TERMINAL_CONFIG_EXPLANATION}>
@@ -240,7 +240,7 @@ export default function RulesForm({
               </div>
             </Form.Item>
 
-            <h4 className="mb-3 font-normal uppercase text-black dark:text-slate-100">
+            <h4 className="mb-3 font-heading text-lg font-normal text-black dark:text-slate-100">
               <Trans>Migration rules</Trans>
             </h4>
             <Form.Item extra={TERMINAL_MIGRATION_EXPLANATION}>
@@ -311,7 +311,7 @@ export default function RulesForm({
             <Trans>Save rules</Trans>
           </Button>
         </Form.Item>
-      </Space>
+      </div>
     </Form>
   )
 }

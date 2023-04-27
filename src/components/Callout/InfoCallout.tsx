@@ -1,4 +1,4 @@
-import { InfoCircleOutlined } from '@ant-design/icons'
+import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import useMobile from 'hooks/Mobile'
 import { twMerge } from 'tailwind-merge'
 import { Callout } from './Callout'
@@ -6,12 +6,14 @@ import { Callout } from './Callout'
 export const InfoCallout: React.FC<{
   className?: string
   noIcon?: boolean
+  icon?: JSX.Element
   collapsible?: boolean
   transparent?: boolean
 }> = ({
   className,
   children,
   noIcon = false,
+  icon,
   transparent = false,
   collapsible,
 }) => {
@@ -25,7 +27,7 @@ export const InfoCallout: React.FC<{
         'rounded-lg',
       )}
       iconComponent={
-        !noIcon ? <InfoCircleOutlined className="flex text-2xl" /> : null
+        !noIcon ? icon ?? <InformationCircleIcon className="h-7 w-7" /> : null
       }
       collapsible={collapse}
     >

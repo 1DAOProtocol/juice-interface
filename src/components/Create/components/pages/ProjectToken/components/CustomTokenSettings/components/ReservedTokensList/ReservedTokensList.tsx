@@ -1,9 +1,8 @@
 import { DeleteOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Space } from 'antd'
-import { Allocation, AllocationSplit } from 'components/Allocation'
-import { AllocationItemTitle } from 'components/Allocation/components/AllocationItemTitle'
-import { OwnerPayoutCard } from 'components/PayoutCard'
+import { Allocation, AllocationSplit } from 'components/v2v3/shared/Allocation'
+import { AllocationItemTitle } from 'components/v2v3/shared/Allocation/components/AllocationItemTitle'
+import { OwnerPayoutCard } from 'components/v2v3/shared/PayoutCard'
 import { FormItemInput } from 'models/formItemInput'
 import { useMemo } from 'react'
 import { formatPercent } from 'utils/format/formatPercent'
@@ -19,7 +18,7 @@ export const ReservedTokensList: React.FC<
   )
   return (
     <Allocation value={value} onChange={onChange}>
-      <Space className="w-full" direction="vertical" size="middle">
+      <div className="flex flex-col gap-4">
         {ceilIfCloseToNextInteger(totalPercent) < 100 ? (
           <OwnerPayoutCard payoutsSelection={'percentages'} />
         ) : null}
@@ -55,7 +54,7 @@ export const ReservedTokensList: React.FC<
             </>
           )}
         </Allocation.List>
-      </Space>
+      </div>
     </Allocation>
   )
 }

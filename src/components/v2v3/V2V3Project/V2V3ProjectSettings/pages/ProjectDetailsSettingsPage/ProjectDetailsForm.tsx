@@ -1,9 +1,10 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, FormInstance, Space } from 'antd'
+import { Button, Form, FormInstance } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { MinimalCollapse } from 'components/MinimalCollapse'
+import { ProjectTagName } from 'models/project-tags'
 import { normalizeHandle } from 'utils/format/formatHandle'
 
 export type ProjectDetailsFormFields = {
@@ -18,6 +19,7 @@ export type ProjectDetailsFormFields = {
   discord: string
   payButton: string
   payDisclosure: string
+  tags: ProjectTagName[]
 }
 
 export function ProjectDetailsForm({
@@ -46,7 +48,7 @@ export function ProjectDetailsForm({
       onFinish={onFinish}
       onValuesChange={() => onValuesChange?.()}
     >
-      <Space direction="vertical" size="large" className="w-full">
+      <div className="flex flex-col gap-6">
         <div>
           <FormItems.ProjectName
             name="name"
@@ -81,6 +83,15 @@ export function ProjectDetailsForm({
             />
           </Form.Item>
         </div>
+
+        <div>
+          <FormItems.ProjectTags
+            name="tags"
+            initialTags={form.getFieldValue('tags')}
+            onChange={tags => form.setFieldsValue({ tags })}
+          />
+        </div>
+
         <div>
           <MinimalCollapse header={<Trans>Project links</Trans>}>
             <FormItems.ProjectLink name="infoUri" />
@@ -120,7 +131,7 @@ export function ProjectDetailsForm({
             )}
           </Form.Item>
         </div>
-      </Space>
+      </div>
     </Form>
   )
 }

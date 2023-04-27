@@ -1,5 +1,5 @@
 import { RightCircleOutlined } from '@ant-design/icons'
-import { Button, ButtonProps, Space } from 'antd'
+import { Button, ButtonProps } from 'antd'
 import { classNames } from 'utils/classNames'
 
 export function TextButton({ className, ...props }: ButtonProps) {
@@ -7,16 +7,16 @@ export function TextButton({ className, ...props }: ButtonProps) {
     <Button
       {...props}
       className={classNames(
-        'p-0 text-sm uppercase text-grey-400 hover:text-bluebs-500',
+        'p-0 text-sm uppercase text-grey-400 hover:text-bluebs-500 dark:text-slate-200 hover:dark:text-bluebs-400',
         className,
       )}
       type="text"
       size="small"
     >
-      <Space size="small">
+      <div className="flex items-center gap-2">
         {props.children}
         <RightCircleOutlined />
-      </Space>
+      </div>
     </Button>
   )
 }

@@ -2,7 +2,7 @@ import { Tooltip } from 'antd'
 import CopyTextButton from 'components/buttons/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
 import { useEnsName } from 'hooks/ensName'
-import { MouseEventHandler } from 'react'
+import { MouseEventHandler, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ensAvatarUrlForAddress } from 'utils/ens'
 import { truncateEthAddress } from 'utils/format/formatAddress'
@@ -13,6 +13,8 @@ interface FormattedAddressProps {
   title?: string
   label?: string
   tooltipDisabled?: boolean
+  linkDisabled?: boolean
+  showEns?: boolean
   truncateTo?: number
   onClick?: MouseEventHandler
   withEnsAvatar?: boolean
@@ -23,7 +25,9 @@ export default function FormattedAddress({
   address,
   title,
   label,
-  tooltipDisabled,
+  tooltipDisabled = false,
+  linkDisabled = false,
+  showEns = true,
   truncateTo,
   onClick,
   withEnsAvatar,
@@ -32,8 +36,13 @@ export default function FormattedAddress({
 
   if (!address) return null
 
-  const formatted =
-    ensName ?? label ?? truncateEthAddress({ address, truncateTo })
+  const formattedAddress = useMemo(() => {
+    if (showEns && ensName) return ensName
+
+    if (label) return label
+
+    return truncateEthAddress({ address, truncateTo })
+  }, [address, ensName, label, showEns, truncateTo])
 
   return (
     <Tooltip
@@ -54,14 +63,20 @@ export default function FormattedAddress({
             loading="lazy"
           />
         )}
-        <EtherscanLink
-          className={twMerge('select-all leading-[22px]', className)}
-          onClick={onClick}
-          type="address"
-          value={address}
-        >
-          {formatted}
-        </EtherscanLink>
+        {linkDisabled ? (
+          <span className={twMerge('select-all leading-[22px]', className)}>
+            {formattedAddress}
+          </span>
+        ) : (
+          <EtherscanLink
+            className={twMerge('select-all leading-[22px]', className)}
+            onClick={onClick}
+            type="address"
+            value={address}
+          >
+            {formattedAddress}
+          </EtherscanLink>
+        )}
       </span>
     </Tooltip>
   )

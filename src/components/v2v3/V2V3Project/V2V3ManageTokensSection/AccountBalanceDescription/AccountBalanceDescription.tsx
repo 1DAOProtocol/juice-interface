@@ -1,24 +1,19 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import ManageTokensModal from 'components/ManageTokensModal'
+import { TokenAmount } from 'components/TokenAmount'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import useERC20BalanceOf from 'hooks/ERC20/ERC20BalanceOf'
-import useTotalBalanceOf from 'hooks/v2v3/contractReader/TotalBalanceOf'
-import useUserUnclaimedTokenBalance from 'hooks/v2v3/contractReader/UserUnclaimedTokenBalance'
-import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
+import { useWallet } from 'hooks/Wallet'
 import { useIsOwnerConnected } from 'hooks/v2v3/IsOwnerConnected'
 import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
+import useTotalBalanceOf from 'hooks/v2v3/contractReader/TotalBalanceOf'
+import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { useTransferUnclaimedTokensTx } from 'hooks/v2v3/transactor/TransferUnclaimedTokensTx'
-import { useWallet } from 'hooks/Wallet'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext, useState } from 'react'
-import {
-  formatPercent,
-  formatWad,
-  fromWad,
-  parseWad,
-} from 'utils/format/formatNumber'
+import { formatPercent, fromWad, parseWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2V3BurnOrRedeemModal } from './V2V3BurnOrRedeemModal'
 import { V2V3ClaimTokensModal } from './V2V3ClaimTokensModal'
@@ -39,20 +34,13 @@ export function AccountBalanceDescription() {
 
   const { userAddress } = useWallet()
   const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
-  const { data: unclaimedBalance } = useUserUnclaimedTokenBalance()
   const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
+  const unclaimedBalance = totalBalance?.sub(claimedBalance ?? 0)
   const userHasMintPermission = useV2ConnectedWalletHasPermission(
     V2V3OperatorPermission.MINT,
   )
   const ownerIsConnected = useIsOwnerConnected()
   const hasIssuedERC20 = useProjectHasErc20()
-
-  const claimedBalanceFormatted = formatWad(claimedBalance ?? 0, {
-    precision: 0,
-  })
-  const unclaimedBalanceFormatted = formatWad(unclaimedBalance ?? 0, {
-    precision: 0,
-  })
 
   const totalTokenSupplyDiscrete = parseInt(fromWad(totalTokenSupply))
   const totalBalanceWithLock = parseInt(fromWad(totalBalance))
@@ -82,21 +70,28 @@ export function AccountBalanceDescription() {
   return (
     <>
       <div>
-        {hasIssuedERC20 && (
+        {hasIssuedERC20 && claimedBalance ? (
           <div>
-            {claimedBalanceFormatted} {tokenText}
+            <TokenAmount amountWad={claimedBalance} tokenSymbol={tokenSymbol} />
           </div>
-        )}
+        ) : null}
         <div>
-          {hasIssuedERC20 ? (
-            <Trans>
-              {unclaimedBalanceFormatted} {tokenText} claimable
-            </Trans>
-          ) : (
-            <>
-              {unclaimedBalanceFormatted} {tokenText}
-            </>
-          )}
+          {unclaimedBalance ? (
+            hasIssuedERC20 ? (
+              <Trans>
+                <TokenAmount
+                  amountWad={unclaimedBalance}
+                  tokenSymbol={tokenSymbol}
+                />{' '}
+                claimable
+              </Trans>
+            ) : (
+              <TokenAmount
+                amountWad={unclaimedBalance}
+                tokenSymbol={tokenSymbol}
+              />
+            )
+          ) : null}
         </div>
         <div className="cursor-default text-xs text-grey-400 dark:text-slate-200">
           <Trans>{userOwnershipPercentage}% of total supply</Trans>

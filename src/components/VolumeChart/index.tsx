@@ -1,7 +1,6 @@
 import { t, Trans } from '@lingui/macro'
-import { Select, Space } from 'antd'
+import { Select } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
-
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { PV } from 'models/pv'
 import moment from 'moment'
@@ -16,7 +15,6 @@ import {
   YAxis,
 } from 'recharts'
 import { classNames } from 'utils/classNames'
-
 import { daysToMillis } from './daysToMillis'
 import { useDuration } from './hooks/Duration'
 import { loadBlockRefs } from './loadBlockRefs'
@@ -38,15 +36,16 @@ export default function VolumeChart({
   projectId: number | undefined
   pv: PV
 }) {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext)
+
   const [events, setEvents] = useState<EventRef[]>([])
   // const [blockRefs, setBlockRefs] = useState<BlockRef[]>([])
   const [loading, setLoading] = useState<boolean>()
   const [domain, setDomain] = useState<[number, number]>()
   const [showGraph, setShowGraph] = useState<ShowGraph>('volume')
   const [duration, setDuration] = useDuration({ createdAt, now })
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
 
   const dateStringForBlockTime = (timestamp: number) =>
     duration
@@ -145,10 +144,10 @@ export default function VolumeChart({
     <div>
       <div className="flex items-baseline justify-between">
         <div>
-          <Space size="large">
+          <div className="flex gap-6">
             {tab('volume')}
             {tab('balance')}
-          </Space>
+          </div>
         </div>
 
         <Select
@@ -263,13 +262,13 @@ export default function VolumeChart({
                 if (!active || !payload?.length) return null
 
                 return (
-                  <div className="border border-solid border-smoke-200 bg-smoke-25 p-2 text-xs dark:border-grey-600 dark:bg-slate-800">
+                  <div className="border border-smoke-200 bg-smoke-25 p-2 text-xs dark:border-grey-600 dark:bg-slate-800">
                     <div className="text-grey-400 dark:text-slate-200">
                       {dateStringForBlockTime(payload[0].payload.timestamp)}
                     </div>
                     {payload[0].payload.tapped ? (
                       <div>
-                        -<CurrencySymbol currency="ETH" />
+                        -<CurrencySymbol currency="ETH" />{' '}
                         {payload[0].payload.tapped}
                         <div className="text-xs font-medium text-grey-500 dark:text-grey-300">
                           withdraw
@@ -277,7 +276,7 @@ export default function VolumeChart({
                       </div>
                     ) : (
                       <div>
-                        <CurrencySymbol currency="ETH" />
+                        <CurrencySymbol currency="ETH" />{' '}
                         {payload[0].payload.value}
                       </div>
                     )}

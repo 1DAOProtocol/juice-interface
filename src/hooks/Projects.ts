@@ -1,7 +1,9 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import axios from 'axios'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
+import { DBProject, DBProjectQueryOpts, DBProjectRow } from 'models/dbProject'
 import {
   InfiniteSGQueryOpts,
   SGEntityKey,
@@ -11,19 +13,24 @@ import {
 import { Json } from 'models/json'
 import { ProjectState } from 'models/projectVisibility'
 import { PV } from 'models/pv'
-import { SepanaProject, SepanaQueryResponse } from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useMemo, useState } from 'react'
-import { useQuery } from 'react-query'
+import {
+  UseInfiniteQueryOptions,
+  UseQueryOptions,
+  useInfiniteQuery,
+  useQuery,
+} from 'react-query'
 import { getSubgraphIdForProject, querySubgraphExhaustive } from 'utils/graph'
-import { parseSepanaProjectJson } from 'utils/sepana'
-
+import { formatQueryParams } from 'utils/queryParams'
+import { parseDBProjectJson, parseDBProjectsRow } from 'utils/sgDbProjects'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 
 interface ProjectsOptions {
   pageNumber?: number
   projectId?: number
+  projectIds?: number[]
   orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid' | 'paymentsCount'
   orderDirection?: 'asc' | 'desc'
   pageSize?: number
@@ -38,18 +45,13 @@ type ProjectsOfParticipantsWhereQuery =
   | null
 
 const DEFAULT_STALE_TIME = 60 * 1000 // 60 seconds
-const DEFAULT_ENTITY_KEYS: (keyof Project)[] = [
+export const DEFAULT_PROJECT_ENTITY_KEYS: (keyof Project)[] = [
   'id',
   'projectId',
   'handle',
-  'owner',
   'createdAt',
   'metadataUri',
-  'metadataDomain',
-  'currentBalance',
   'totalPaid',
-  'totalRedeemed',
-  'terminal',
   'pv',
 ]
 const V1_ARCHIVED_SUBGRAPH_IDS = V1ArchivedProjectIds.map(projectId =>
@@ -63,7 +65,7 @@ const ARCHIVED_SUBGRAPH_IDS = [
   ...V2_ARCHIVED_SUBGRAPH_IDS,
 ]
 
-const queryOpts = (
+const buildProjectQueryOpts = (
   opts: ProjectsOptions,
 ): Partial<
   | SGQueryOpts<'project', SGEntityKey<'project'>>
@@ -75,6 +77,14 @@ const queryOpts = (
     where.push({
       key: 'pv',
       value: opts.pv,
+      operator: 'in',
+    })
+  }
+
+  if (opts.projectIds) {
+    where.push({
+      key: 'projectId',
+      value: opts.projectIds,
       operator: 'in',
     })
   }
@@ -100,7 +110,7 @@ const queryOpts = (
 
   return {
     entity: 'project',
-    keys: opts.keys ?? DEFAULT_ENTITY_KEYS,
+    keys: opts.keys ?? DEFAULT_PROJECT_ENTITY_KEYS,
     orderDirection: opts.orderDirection ?? 'desc',
     orderBy: opts.orderBy ?? 'totalPaid',
     pageSize: opts.pageSize,
@@ -111,7 +121,10 @@ const queryOpts = (
 export function useProjectsQuery(opts: ProjectsOptions) {
   return useSubgraphQuery(
     {
-      ...(queryOpts(opts) as SGQueryOpts<'project', SGEntityKey<'project'>>),
+      ...(buildProjectQueryOpts(opts) as SGQueryOpts<
+        'project',
+        SGEntityKey<'project'>
+      >),
       first: opts.pageSize,
       skip:
         opts.pageNumber && opts.pageSize
@@ -139,7 +152,7 @@ export function useProjectsSearch(
       ? {
           text: `${handle}:*`,
           entity: 'projectSearch',
-          keys: DEFAULT_ENTITY_KEYS,
+          keys: DEFAULT_PROJECT_ENTITY_KEYS,
         }
       : null,
     {
@@ -149,41 +162,87 @@ export function useProjectsSearch(
   )
 }
 
-/**
- * Search Sepana projects for query and return only a list of projects
- * @param text text to search
- * @param pageSize number of projects to return
- * @param enabled query will only run if enabled
- * @returns list of projects
- */
-export function useSepanaProjectsSearch(
-  text: string | undefined,
-  opts?: {
-    pageSize?: number
-    enabled?: boolean
-  },
+export function useDBProjectsQuery(
+  opts: DBProjectQueryOpts,
+  reactQueryOptions?: UseQueryOptions<
+    DBProject[],
+    Error,
+    DBProject[],
+    readonly [string, DBProjectQueryOpts]
+  >,
 ) {
-  return useQuery(
-    ['sepana-query', text, opts?.pageSize],
+  return useQuery<
+    DBProject[],
+    Error,
+    DBProject[],
+    readonly [string, DBProjectQueryOpts]
+  >(
+    ['dbp-query', opts],
     () =>
       axios
-        .get<SepanaQueryResponse<Json<SepanaProject>>>(
-          `/api/sepana/projects?text=${text}${
-            opts?.pageSize !== undefined ? `&pageSize=${opts?.pageSize}` : ''
-          }`,
-        )
+        .get<Json<DBProjectRow>[]>(`/api/projects?${formatQueryParams(opts)}`)
         .then(res =>
-          res.data.hits.hits.map(h => parseSepanaProjectJson(h._source)),
+          res.data?.map(p => parseDBProjectJson(parseDBProjectsRow(p))),
         ),
     {
       staleTime: DEFAULT_STALE_TIME,
-      enabled: opts?.enabled,
+      ...reactQueryOptions,
+    },
+  )
+}
+
+export function useDBProjectsInfiniteQuery(
+  opts: DBProjectQueryOpts,
+  reactQueryOptions?: UseInfiniteQueryOptions<
+    DBProject[],
+    Error,
+    DBProject[],
+    DBProject[],
+    readonly [string, DBProjectQueryOpts]
+  >,
+) {
+  return useInfiniteQuery(
+    ['dbp-infinite-query', opts],
+    async ({ queryKey, pageParam }) => {
+      const { pageSize, ...evaluatedOpts } = queryKey[1]
+
+      return axios
+        .get<DBProjectRow[]>(
+          `/api/projects?${formatQueryParams({
+            ...evaluatedOpts,
+            page: pageParam,
+            pageSize,
+          })}`,
+        )
+        .then(res =>
+          res.data?.map(p => parseDBProjectJson(parseDBProjectsRow(p))),
+        )
+    },
+    {
+      staleTime: DEFAULT_STALE_TIME,
+      ...reactQueryOptions,
+      // Don't allow this function to be overwritten by reactQueryOptions
+      getNextPageParam: (lastPage, allPages) => {
+        // If the last page contains less than the expected page size,
+        // it's safe to assume you're at the end.
+        if (opts.pageSize && lastPage.length < opts.pageSize) {
+          return false
+        } else {
+          return allPages.length
+        }
+      },
     },
   )
 }
 
 export function useTrendingProjects(count: number) {
-  const whereQuery: SGWhereArg<'project'>[] = []
+  const whereQuery: SGWhereArg<'project'>[] = [
+    {
+      key: 'trendingScore',
+      operator: 'gt',
+      value: 0,
+    },
+  ]
 
   if (ARCHIVED_SUBGRAPH_IDS.length) {
     whereQuery.push({
@@ -196,8 +255,9 @@ export function useTrendingProjects(count: number) {
   return useSubgraphQuery({
     entity: 'project',
     keys: [
-      ...DEFAULT_ENTITY_KEYS,
+      ...DEFAULT_PROJECT_ENTITY_KEYS,
       'trendingScore',
+      'paymentsCount',
       'trendingPaymentsCount',
       'trendingVolume',
       'createdWithinTrendingWindow',
@@ -221,27 +281,6 @@ export function useContributedProjectsQuery(wallet: string | undefined) {
       },
       {
         key: 'totalPaid',
-        operator: 'gt',
-        value: 0,
-      },
-    ]
-  }, [wallet])
-
-  return useProjectsOfParticipants(where)
-}
-
-// Query all projects that a wallet holds tokens for
-export function useHoldingsProjectsQuery(wallet: string | undefined) {
-  const where = useMemo((): ProjectsOfParticipantsWhereQuery => {
-    if (!wallet) return null
-
-    return [
-      {
-        key: 'wallet',
-        value: wallet.toLowerCase(),
-      },
-      {
-        key: 'balance',
         operator: 'gt',
         value: 0,
       },
@@ -304,7 +343,7 @@ function useProjectsOfParticipants(where: ProjectsOfParticipantsWhereQuery) {
     projectIds
       ? {
           entity: 'project',
-          keys: DEFAULT_ENTITY_KEYS,
+          keys: DEFAULT_PROJECT_ENTITY_KEYS,
           where: {
             key: 'id',
             operator: 'in',
@@ -325,7 +364,7 @@ export function useMyProjectsQuery(wallet: string | undefined) {
     wallet
       ? {
           entity: 'project',
-          keys: DEFAULT_ENTITY_KEYS,
+          keys: DEFAULT_PROJECT_ENTITY_KEYS,
           where: {
             key: 'owner',
             operator: 'in',
@@ -344,7 +383,46 @@ export function useMyProjectsQuery(wallet: string | undefined) {
 
 export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
   return useInfiniteSubgraphQuery(
-    queryOpts(opts) as InfiniteSGQueryOpts<'project', SGEntityKey<'project'>>,
+    buildProjectQueryOpts(opts) as InfiniteSGQueryOpts<
+      'project',
+      SGEntityKey<'project'>
+    >,
     { staleTime: DEFAULT_STALE_TIME },
   )
+}
+
+export function useProjectTrendingPercentageIncrease({
+  totalPaid,
+  trendingVolume,
+}: {
+  totalPaid: BigNumber
+  trendingVolume: BigNumber
+}): number {
+  const percentageGain = useMemo(() => {
+    const preTrendingVolume = totalPaid?.sub(trendingVolume)
+
+    if (!preTrendingVolume?.gt(0)) return Infinity
+
+    const percentGain = trendingVolume
+      .mul(10000)
+      .div(preTrendingVolume)
+      .toNumber()
+
+    let percentRounded: number
+
+    // If percentGain > 1, round to int
+    if (percentGain >= 100) {
+      percentRounded = Math.round(percentGain / 100)
+      // If 0.1 <= percentGain < 1, round to 1dp
+    } else if (percentGain >= 10) {
+      percentRounded = Math.round(percentGain / 10) / 10
+      // If percentGain < 0.1, round to 2dp
+    } else {
+      percentRounded = percentGain / 100
+    }
+
+    return percentRounded
+  }, [totalPaid, trendingVolume])
+
+  return percentageGain
 }

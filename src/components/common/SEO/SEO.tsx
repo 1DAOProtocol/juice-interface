@@ -2,6 +2,9 @@ import config from 'config/seo_meta.json'
 import Head from 'next/head'
 import { FC, ReactNode } from 'react'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
+import { FathomScript } from '../Head/scripts/FathomScript'
+import { HotjarScript } from '../Head/scripts/HotjarScript'
+import { QwestiveScript } from '../Head/scripts/QwestiveScripts'
 import { OpenGraphMetaTags } from './OpenGraphMetaTags'
 import {
   TwitterCardType,
@@ -12,6 +15,7 @@ import {
 export interface SEOProps {
   url?: string
   title?: string
+  overrideFormattedTitle?: boolean
   description?: string
   twitter?: Omit<TwitterMetaTagsProps, 'title' | 'description'>
   robots?: string
@@ -21,6 +25,7 @@ export interface SEOProps {
 export const SEO: FC<SEOProps> = ({
   url,
   title,
+  overrideFormattedTitle,
   description,
   twitter,
   robots,
@@ -28,9 +33,15 @@ export const SEO: FC<SEOProps> = ({
 }) => {
   const formatTwitterHandle = (handle: string | undefined) =>
     handle ? (handle.startsWith('@') ? handle : '@' + handle) : undefined
-  const formattedTitle = title
-    ? `${config.titleTemplate.replace(/%s/g, title)}`
-    : config.title
+
+  let formattedTitle = config.title
+  if (title) {
+    formattedTitle = config.titleTemplate.replace(/%s/g, title)
+  }
+  if (overrideFormattedTitle) {
+    formattedTitle = title ?? config.title
+  }
+
   return (
     <>
       <Head>
@@ -47,7 +58,6 @@ export const SEO: FC<SEOProps> = ({
           content={robots ?? 'index,follow'}
         ></meta>
       </Head>
-
       <TwitterMetaTags
         title={formattedTitle}
         description={description ?? config.description}
@@ -59,7 +69,6 @@ export const SEO: FC<SEOProps> = ({
         card={twitter?.card ?? (config.twitter.cardType as TwitterCardType)}
         image={ipfsUriToGatewayUrl(twitter?.image ?? config.twitter.image)}
       />
-
       <OpenGraphMetaTags
         type="website"
         url={url ?? process.env.NEXT_PUBLIC_BASE_URL} // default to base url
@@ -78,6 +87,18 @@ export const SEO: FC<SEOProps> = ({
       />
 
       <Head>{children}</Head>
+      {/**
+       * As recommended in Next docs that next/script can be loaded directly
+       * outside next/head with strategies like afterInteractive without affecting
+       * the page performance
+       */}
+      {process.env.NODE_ENV === 'production' && (
+        <>
+          <FathomScript />
+          <HotjarScript />
+          <QwestiveScript />
+        </>
+      )}
     </>
   )
 }

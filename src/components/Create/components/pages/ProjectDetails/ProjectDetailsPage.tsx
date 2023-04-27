@@ -1,9 +1,10 @@
 import { RightOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { ADDRESS_ZERO } from '@uniswap/v3-sdk'
-import { Col, Form, Row, Space } from 'antd'
+import { Col, Form, Row } from 'antd'
 import { Callout } from 'components/Callout'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
+import { FormItems } from 'components/formItems'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
@@ -47,7 +48,7 @@ export const ProjectDetailsPage: React.FC = () => {
       }}
       scrollToFirstError
     >
-      <Space className="w-full" direction="vertical" size="large">
+      <div className="flex flex-col gap-6">
         <Form.Item
           name="projectName"
           label={t`Project name`}
@@ -127,6 +128,17 @@ export const ProjectDetailsPage: React.FC = () => {
           </CreateCollapse.Panel>
           <CreateCollapse.Panel
             key={2}
+            header={<OptionalHeader header={t`Project tags`} />}
+            hideDivider
+          >
+            <FormItems.ProjectTags
+              name="tags"
+              hideLabel
+              initialTags={formProps.form.getFieldValue('tags')}
+            />
+          </CreateCollapse.Panel>
+          <CreateCollapse.Panel
+            key={3}
             header={<OptionalHeader header={t`Project page customizations`} />}
             hideDivider
           >
@@ -160,7 +172,7 @@ export const ProjectDetailsPage: React.FC = () => {
             </Form.Item>
           </CreateCollapse.Panel>
         </CreateCollapse>
-      </Space>
+      </div>
 
       <Wizard.Page.ButtonControl />
 

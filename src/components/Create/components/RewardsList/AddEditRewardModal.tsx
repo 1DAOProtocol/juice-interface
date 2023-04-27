@@ -1,7 +1,8 @@
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Form, Modal, Space, Tooltip } from 'antd'
+import { Form, Modal, Tooltip } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
+import { WarningCallout } from 'components/Callout/WarningCallout'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
@@ -184,6 +185,12 @@ export const AddEditRewardModal = ({
       onCancel={onModalCancel}
       destroyOnClose
     >
+      <WarningCallout className="mb-4">
+        <Trans>
+          "Editing" an NFT creates a copy of it. The old version won't be
+          available, and the new version will have a new token ID.
+        </Trans>
+      </WarningCallout>
       <Form form={form} preserve={false} colon={false} layout="vertical">
         <Form.Item
           name="fileUrl"
@@ -223,7 +230,7 @@ export const AddEditRewardModal = ({
           />
         </Form.Item>
         <Form.Item>
-          <Space className="w-full" direction="vertical" size="small">
+          <div className="flex flex-col gap-2">
             <JuiceSwitch
               value={limitedSupply}
               onChange={setLimitedSupply}
@@ -241,7 +248,7 @@ export const AddEditRewardModal = ({
                 <FormattedNumberInput min={1} />
               </Form.Item>
             )}
-          </Space>
+          </div>
         </Form.Item>
         <CreateCollapse
           activeKey={advancedOptionsOpen ? ['0'] : []}

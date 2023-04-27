@@ -1,4 +1,4 @@
-import { Progress, Steps as AntSteps } from 'antd'
+import { Steps as AntSteps, Progress } from 'antd'
 import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
 import { useCallback } from 'react'
@@ -74,7 +74,7 @@ export const Steps = () => {
   }
 
   return (
-    <div className="max-w-[840px]">
+    <div className="max-w-4xl">
       <AntSteps
         current={current.index}
         progressDot

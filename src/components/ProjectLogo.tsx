@@ -4,7 +4,7 @@ import { cidFromUrl, ipfsGatewayUrl, ipfsUriToGatewayUrl } from 'utils/ipfs'
 
 // Override some project logos.
 const IMAGE_URI_OVERRIDES: { [k: number]: string } = {
-  1: '/assets/juiceboxdao_logo.webp', // the on-chain logo's filesize is too large. This is a smaller version.
+  1: '/assets/images/juiceboxdao_logo.webp', // the on-chain logo's filesize is too large. This is a smaller version.
 }
 
 export default function ProjectLogo({
@@ -12,11 +12,13 @@ export default function ProjectLogo({
   uri,
   name,
   projectId,
+  lazyLoad,
 }: {
   className?: string
   uri: string | undefined
   name: string | undefined
   projectId?: number | undefined
+  lazyLoad?: boolean
 }) {
   const [srcLoadError, setSrcLoadError] = useState(false)
   const validImg = uri && !srcLoadError
@@ -48,11 +50,11 @@ export default function ProjectLogo({
     >
       {validImg ? (
         <img
-          className="max-h-full max-w-full object-cover object-center"
+          className="h-full w-full object-cover object-center"
           src={imageSrc}
           alt={name + ' logo'}
           onError={() => setSrcLoadError(true)}
-          loading="lazy"
+          loading={lazyLoad ? 'lazy' : undefined}
           crossOrigin="anonymous"
           title={name}
         />

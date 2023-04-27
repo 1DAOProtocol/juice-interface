@@ -1,25 +1,27 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { Button, Tabs } from 'antd'
+import { Badge } from 'components/Badge'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import Grid from 'components/Grid'
+import { Etherscan } from 'components/icons/Etherscan'
 import Loading from 'components/Loading'
 import Paragraph from 'components/Paragraph'
 import SocialLinks from 'components/Project/ProjectHeader/SocialLinks'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
+import { SocialButton } from 'components/SocialButton'
+import useMobile from 'hooks/Mobile'
 import { useContributedProjectsQuery, useMyProjectsQuery } from 'hooks/Projects'
 import { useWallet } from 'hooks/Wallet'
-import { AuthAPI } from 'lib/api/auth'
+import { useWalletSignIn } from 'hooks/WalletSignIn'
 import { Profile } from 'models/database'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 import { ensAvatarUrlForAddress } from 'utils/ens'
-import { truncateEthAddress } from 'utils/format/formatAddress'
-import { v4 } from 'uuid'
+import { etherscanLink } from 'utils/etherscan'
 
 function ProjectsList({ projects }: { projects: ProjectCardProject[] }) {
   return (
@@ -112,7 +114,7 @@ export function AccountDashboard({
   profile: Profile | null
 }) {
   const wallet = useWallet()
-  const supabase = useSupabaseClient()
+  const signIn = useWalletSignIn()
   const router = useRouter()
 
   const [editProfileButtonLoading, setEditProfileButtonLoading] =
@@ -120,49 +122,15 @@ export function AccountDashboard({
 
   const onEditProfileClicked = useCallback(async () => {
     setEditProfileButtonLoading(true)
-    if (wallet.chainUnsupported) {
-      const walletChanged = await wallet.changeNetworks()
-      if (!walletChanged) {
-        console.error('Wallet did not change network')
-        setEditProfileButtonLoading(false)
-        return
-      }
-    }
-    if (!wallet.signer || !wallet.userAddress) {
-      console.error('Wallet not connected')
-      setEditProfileButtonLoading(false)
-      return
-    }
-
-    const { data } = await supabase.auth.getSession()
-    if (data.session) {
-      await router.push(`/account/${wallet.userAddress}/edit`)
-      return
-    }
-
     try {
-      const challengeMessage = await AuthAPI.getChallengeMessage({
-        wallet: wallet.userAddress,
-      })
-      const signature = await wallet.signer.signMessage(challengeMessage)
-      const accessToken = await AuthAPI.walletSignIn({
-        wallet: wallet.userAddress,
-        signature,
-        message: challengeMessage,
-      })
-      const { error } = await supabase.auth.setSession({
-        access_token: accessToken,
-        refresh_token: v4(), // Set to garbage token, no long lived tokens
-      })
-      if (error) throw error
-
+      await signIn()
       await router.push(`/account/${wallet.userAddress}/edit`)
     } catch (e) {
       console.error('Error occurred while signing in', e)
     } finally {
       setEditProfileButtonLoading(false)
     }
-  }, [router, supabase.auth, wallet])
+  }, [router, signIn, wallet.userAddress])
 
   const items = [
     {
@@ -195,15 +163,20 @@ export function AccountDashboard({
               </h1>
               {ensName && (
                 <EtherscanLink
+                  truncated
                   type="address"
-                  value={truncateEthAddress({ address })}
+                  value={address}
                   className="text-grey-500 dark:text-slate-100"
                 />
               )}
-              <SocialLinks
-                infoUri={profile?.website ?? undefined}
-                twitter={profile?.twitter ?? undefined}
-              />
+              <div className="flex gap-3">
+                <EtherscanSocialButton address={address} />
+                <SocialLinks
+                  infoUri={profile?.website ?? undefined}
+                  twitter={profile?.twitter ?? undefined}
+                  tooltipPlacement="bottom"
+                />
+              </div>
             </div>
           </div>
           {isOwner && (
@@ -212,8 +185,8 @@ export function AccountDashboard({
               icon={<SettingOutlined />}
               onClick={onEditProfileClicked}
             >
-              <span>
-                <Trans>Edit profile</Trans>
+              <span className="inline-flex gap-3">
+                <Trans>Settings</Trans> <Badge variant="info">Beta</Badge>
               </span>
             </Button>
           )}
@@ -225,5 +198,19 @@ export function AccountDashboard({
 
       <Tabs items={items} />
     </div>
+  )
+}
+
+const EtherscanSocialButton = ({ address }: { address: string }) => {
+  const isMobile = useMobile()
+
+  return (
+    <SocialButton
+      link={etherscanLink('address', address)}
+      tooltip="Etherscan"
+      tooltipPlacement={'bottom'}
+    >
+      <Etherscan size={isMobile ? 16 : 14} />
+    </SocialButton>
   )
 }

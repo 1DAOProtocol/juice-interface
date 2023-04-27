@@ -1,6 +1,8 @@
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import AMMPrices from 'components/AMMPrices'
+import Loading from 'components/Loading'
+import { Suspense, lazy } from 'react'
+const AMMPrices = lazy(() => import('components/AMMPrices'))
 
 export const RedeemAMMPrices = ({
   className,
@@ -16,13 +18,15 @@ export const RedeemAMMPrices = ({
       <Trans>
         or{' '}
         <Tooltip
-          overlayClassName="min-w-[300px]"
+          overlayClassName="min-w-xs"
           title={
-            <AMMPrices
-              mode="redeem"
-              tokenSymbol={tokenSymbol}
-              tokenAddress={tokenAddress}
-            />
+            <Suspense fallback={<Loading />}>
+              <AMMPrices
+                mode="redeem"
+                tokenSymbol={tokenSymbol}
+                tokenAddress={tokenAddress}
+              />
+            </Suspense>
           }
           placement="bottomLeft"
         >

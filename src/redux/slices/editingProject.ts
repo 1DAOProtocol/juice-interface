@@ -1,9 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { V1_CURRENCY_USD } from 'constants/v1/currency'
+import { ProjectTagName } from 'models/project-tags'
 import {
   LATEST_METADATA_VERSION,
-  ProjectMetadataV7,
+  ProjectMetadata,
 } from 'models/projectMetadata'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayoutMod, TicketMod } from 'models/v1/mods'
@@ -19,10 +21,8 @@ import {
   serializeV1FundingCycle,
 } from 'utils/v1/serializers'
 
-import { V1_CURRENCY_USD } from 'constants/v1/currency'
-
 interface EditingProjectInfo {
-  metadata: ProjectMetadataV7
+  metadata: ProjectMetadata
   handle: string
 }
 
@@ -56,6 +56,7 @@ export const defaultProjectState: EditingProjectState = {
       tokens: [],
       version: LATEST_METADATA_VERSION,
       archived: false,
+      tags: [],
     },
     handle: '',
   },
@@ -116,6 +117,9 @@ const editingProjectSlice = createSlice({
     },
     setPayDisclosure: (state, action: PayloadAction<string>) => {
       state.info.metadata.payDisclosure = action.payload
+    },
+    setTags: (state, action: PayloadAction<ProjectTagName[]>) => {
+      state.info.metadata.tags = action.payload
     },
     setHandle: (state, action: PayloadAction<string>) => {
       state.info.handle = action.payload

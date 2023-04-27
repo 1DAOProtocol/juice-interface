@@ -6,7 +6,7 @@ import {
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { Button, Modal, Select, Space } from 'antd'
+import { Button, Modal, Select } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
 import Loading from 'components/Loading'
@@ -15,10 +15,11 @@ import { SGOrderDir, SGQueryOpts } from 'models/graph'
 import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { isZeroAddress } from 'utils/address'
-import { formatPercent, formatWad } from 'utils/format/formatNumber'
+import { formatPercent } from 'utils/format/formatNumber'
 import { querySubgraph } from 'utils/graph'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
+import { TokenAmount } from 'components/TokenAmount'
 import { DownloadParticipantsModal } from './DownloadParticipantsModal'
 
 const pageSize = 100
@@ -74,7 +75,7 @@ export default function ParticipantsModal({
     querySubgraph({
       entity: 'participant',
       keys: [
-        'wallet',
+        'wallet { id }',
         'totalPaid',
         'lastPaidTimestamp',
         'balance',
@@ -175,13 +176,13 @@ export default function ParticipantsModal({
 
         {participants.map(p => (
           <div
-            className="border-b-1 mb-5 border border-l-0 border-t-0 border-r-0 border-solid border-smoke-200 pb-5 dark:border-grey-600"
+            className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
             key={p.id}
           >
             <div className="flex content-between justify-between">
               <div>
                 <div className="mr-2 leading-6">
-                  <FormattedAddress address={p.wallet} />
+                  <FormattedAddress address={p.wallet.id} />
                 </div>
                 <div className="text-xs text-grey-400 dark:text-slate-200">
                   <Trans>
@@ -192,22 +193,18 @@ export default function ParticipantsModal({
 
               <div className="text-right">
                 <div className="leading-6">
-                  {formatWad(p.balance, { precision: 0 })}{' '}
-                  {tokenSymbolText({
-                    tokenSymbol,
-                    capitalize: false,
-                    plural: true,
-                  })}{' '}
+                  <TokenAmount
+                    amountWad={p.balance}
+                    tokenSymbol={tokenSymbol}
+                  />{' '}
                   ({formatPercent(p.balance, totalTokenSupply)}%)
                 </div>
                 <div className="text-xs text-grey-400 dark:text-slate-200">
-                  {formatWad(p.stakedBalance, { precision: 0 })}{' '}
                   <Trans>
-                    {tokenSymbolText({
-                      tokenSymbol,
-                      capitalize: false,
-                      plural: true,
-                    })}{' '}
+                    <TokenAmount
+                      amountWad={p.stakedBalance}
+                      tokenSymbol={tokenSymbol}
+                    />{' '}
                     unclaimed
                   </Trans>
                 </div>
@@ -240,7 +237,7 @@ export default function ParticipantsModal({
             {tokenSymbolText({ tokenSymbol, capitalize: true })} holders
           </Trans>
         </h4>
-        <Space direction="vertical" className="w-full">
+        <div className="flex flex-col gap-2">
           {tokenAddress && !isZeroAddress(tokenAddress) && (
             <div className="mb-5">
               <Trans>
@@ -269,7 +266,7 @@ export default function ParticipantsModal({
               <Trans>{participants.length} total</Trans>
             </div>
           )}
-        </Space>
+        </div>
       </div>
 
       <DownloadParticipantsModal

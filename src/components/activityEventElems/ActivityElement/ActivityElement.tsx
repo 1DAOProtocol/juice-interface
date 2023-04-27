@@ -1,8 +1,6 @@
 import { ArrowRightOutlined } from '@ant-design/icons'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
-import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
-import { useV2V3TerminalVersion } from 'hooks/v2v3/V2V3TerminalVersion'
 import { isEqualAddress } from 'utils/address'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 import { ActivityElementEvent } from './activityElementEvent'
@@ -17,28 +15,20 @@ const CallerBeneficiary = ({
   if (!(beneficiary || caller)) return null
 
   return beneficiary && caller && !isEqualAddress(beneficiary, caller) ? (
-    <div className="text-xs text-grey-500 dark:text-grey-300">
+    <div className="text-xs">
       <FormattedAddress address={caller} title="Caller" />{' '}
       <ArrowRightOutlined />{' '}
       <FormattedAddress address={beneficiary} title="Beneficiary" />
     </div>
   ) : (
-    <div className="text-sm text-grey-500 dark:text-grey-300">
+    <div className="text-sm">
       <FormattedAddress withEnsAvatar address={caller} />
     </div>
   )
 }
 
 const ExtraContainer: React.FC = ({ children }) => {
-  return (
-    <div
-      style={{
-        marginTop: '5px',
-      }}
-    >
-      {children}
-    </div>
-  )
+  return <div className="mt-2">{children}</div>
 }
 
 function Header({ header }: { header: string | JSX.Element }) {
@@ -49,24 +39,12 @@ function Header({ header }: { header: string | JSX.Element }) {
   )
 }
 
-function TimestampVersion({
-  timestamp,
-  txHash,
-  terminal,
-}: ActivityElementEvent) {
-  const terminalVersion = useV2V3TerminalVersion(terminal)
-
+function TimestampVersion({ timestamp, txHash }: ActivityElementEvent) {
   return (
-    <div style={{ textAlign: 'right' }}>
+    <div className="text-right">
       {timestamp && (
         <div className="text-xs text-grey-500 dark:text-grey-300">
           {formatHistoricalDate(timestamp * 1000)}{' '}
-          {terminalVersion && (
-            <ProjectVersionBadge
-              versionText={'V' + terminalVersion}
-              className="text-secondary bg-transparent text-xs dark:bg-transparent"
-            />
-          )}{' '}
           <EtherscanLink
             value={txHash}
             type="tx"

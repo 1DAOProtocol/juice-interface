@@ -1,5 +1,4 @@
 import { t } from '@lingui/macro'
-import { Space } from 'antd'
 import { Tab } from 'components/Tab'
 import { ProjectCategory } from 'models/projectVisibility'
 import Link from 'next/link'
@@ -7,18 +6,10 @@ import Link from 'next/link'
 const TAB_TYPE_NAMES: { [k in ProjectCategory]: string } = {
   all: t`All`,
   new: t`New`,
-  holdings: t`My holdings`,
-  myprojects: t`My projects`,
   trending: t`Trending`,
 }
 
-const TABS: ProjectCategory[] = [
-  'all',
-  'trending',
-  'new',
-  'holdings',
-  'myprojects',
-]
+const TABS: ProjectCategory[] = ['all', 'trending', 'new']
 
 const ProjectTab = ({
   type,
@@ -42,10 +33,10 @@ export default function ProjectsTabs({
   selectedTab: ProjectCategory
 }) {
   return (
-    <Space className="flex-wrap gap-y-4" direction="horizontal" size="large">
+    <div className="flex flex-wrap gap-y-4 gap-x-6">
       {TABS.map(type => (
         <ProjectTab type={type} key={type} isSelected={type === selectedTab} />
       ))}
-    </Space>
+    </div>
   )
 }

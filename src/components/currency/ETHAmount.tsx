@@ -1,15 +1,12 @@
-import { Tooltip } from 'antd'
-
 import { BigNumber } from '@ethersproject/bignumber'
-import { betweenZeroAndOne } from 'utils/bigNumbers'
-import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
-
-import CurrencySymbol from '../CurrencySymbol'
-
+import { Tooltip } from 'antd'
+import CurrencySymbol from 'components/CurrencySymbol'
 import { PRECISION_ETH } from 'constants/currency'
+import { betweenZeroAndOne } from 'utils/bigNumbers'
+import { formatWad, fromWad } from 'utils/format/formatNumber'
 import ETHToUSD from './ETHToUSD'
 
-const MIN_AMOUNT = parseWad(0.0001)
+const MIN_ETH_PRECISION = 5
 
 /**
  * Render a given amount formatted as ETH. Displays USD amount in a tooltip on hover.
@@ -27,51 +24,53 @@ export default function ETHAmount({
   fallback?: string
   hideTooltip?: boolean
 }) {
+  const symbol = <CurrencySymbol currency="ETH" />
   if (amount === undefined) return fallback ? <span>{fallback}</span> : null
 
   if (amount?.isZero()) {
-    return (
-      <>
-        <CurrencySymbol currency="ETH" />0
-      </>
-    )
+    return <>{symbol}0</>
   }
 
   const decimalsCount = fromWad(amount).split('.')[1]?.length ?? 0
+  const isBelowZero = betweenZeroAndOne(amount)
 
-  const precisionAdjusted = betweenZeroAndOne(amount)
-    ? Math.min(decimalsCount, PRECISION_ETH)
+  const precisionAdjusted = isBelowZero
+    ? Math.min(MIN_ETH_PRECISION, Math.max(decimalsCount, PRECISION_ETH))
     : precision
-
-  if (amount?.lte(MIN_AMOUNT)) {
-    return (
-      <Tooltip
-        title={
-          <span>
-            <CurrencySymbol currency="ETH" />
-            {formatWad(amount, { precision: 8 })}
-          </span>
-        }
-        open={hideTooltip ? !hideTooltip : undefined}
-      >
-        <CurrencySymbol currency="ETH" />
-        ~0
-      </Tooltip>
-    )
-  }
 
   const formattedETHAmount = formatWad(amount, {
     precision: precisionAdjusted,
     padEnd,
   })
 
+  if (isBelowZero) {
+    return (
+      <Tooltip
+        title={
+          <span>
+            {symbol}
+            {formatWad(amount)}
+          </span>
+        }
+        open={hideTooltip ? !hideTooltip : undefined}
+      >
+        {formattedETHAmount === '0' ? '~' : null}
+        {symbol}
+        {formattedETHAmount}
+      </Tooltip>
+    )
+  }
+
   return (
     <Tooltip
       title={<ETHToUSD ethAmount={amount} />}
       open={hideTooltip ? !hideTooltip : undefined}
     >
-      <CurrencySymbol currency="ETH" />
-      {formattedETHAmount}
+      <span className="inline-flex items-center">
+        {formattedETHAmount === '0' ? '~' : null}
+        {symbol}
+        <span>{formattedETHAmount}</span>
+      </span>
     </Tooltip>
   )
 }
