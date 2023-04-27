@@ -24,10 +24,12 @@ export async function hasFundingCycle(
     )
   }
 
-  const { fundingCycle } = await JBFundingCycleStore.latestConfiguredOf(
-    projectId,
-  )
-
-  // if the funding cycle number is non-zero, it exists.
-  return !fundingCycle.number.eq(0)
+  console.info('hasFundingCycle - projectId:', projectId);
+  return true;
+  // const { fundingCycle } = await JBFundingCycleStore.latestConfiguredOf(
+  //   projectId,
+  // )
+  //
+  // // if the funding cycle number is non-zero, it exists.
+  // return !fundingCycle.number.eq(0)
 }

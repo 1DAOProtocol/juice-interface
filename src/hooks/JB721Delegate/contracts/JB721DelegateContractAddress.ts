@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react'
 import { JB721DelegatePackageVersion } from './JB721DelegateAbi'
 
 async function loadJB721DelegateDeployment(version: JB721DelegateVersion) {
+  console.info('AAAAAAAAAAAAAAAAAAAAAAAA - loadJB721DelegateDeployment');
   const versionString = JB721DelegatePackageVersion(version)
   if (!versionString) return
-
   return (await import(
     `@jbx-protocol/juice-721-delegate-${versionString}/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`
   )) as ForgeDeploy

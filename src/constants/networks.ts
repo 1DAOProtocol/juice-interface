@@ -49,6 +49,16 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     blockExplorer: 'https://goerli.etherscan.io/',
     rpcUrl: `https://goerli.infura.io/v3/${infuraId}`,
   },
+  421613: {
+    name: NetworkName.arbitrumGoerli,
+    label: 'Arbitrum Goerli',
+    color: '#0975F6',
+    chainId: 421613,
+    faucet: 'https://goerli-faucet.slock.it/',
+    blockExplorer: 'https://goerli.etherscan.io/',
+    // rpcUrl: `https://goerli-rollup.arbitrum.io/rpc`,
+    rpcUrl: `https://arbitrum-goerli.infura.io/v3/${infuraId}`,
+  },
 }
 
 export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(

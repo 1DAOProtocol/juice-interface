@@ -1,4 +1,4 @@
-import { readProvider } from 'constants/readProvider'
+import { ensReadProvider } from 'constants/readProvider'
 import { isAddress } from 'ethers/lib/utils'
 import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -19,7 +19,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     let response
 
     if (isAddress(addressOrEnsName)) {
-      const name = await readProvider.lookupAddress(addressOrEnsName)
+      // const name = await readProvider.lookupAddress(addressOrEnsName)
+      const name = await ensReadProvider.lookupAddress(addressOrEnsName)
       response = {
         address: addressOrEnsName,
         name,
@@ -27,7 +28,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     if (addressOrEnsName.endsWith('.eth')) {
-      const address = await readProvider.resolveName(addressOrEnsName)
+      // const address = await readProvider.resolveName(addressOrEnsName)
+      const address = await ensReadProvider.resolveName(addressOrEnsName)
       if (!address) response = undefined
 
       response = {
@@ -48,6 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   } catch (err) {
     logger.error({ error: err })
 
+    console.info('ensReadProvider:', ensReadProvider);
     return res.status(500).json({ error: 'failed to resolve ens name' })
   }
 }

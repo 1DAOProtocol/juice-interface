@@ -11,7 +11,7 @@ export const loadJuiceboxV3Contract = async (
     switch (contractName) {
       case V2V3ContractName.JBController: {
         contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBController.json`
+          `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBController.json`
         )) as ContractJson
         break
       }
@@ -23,85 +23,85 @@ export const loadJuiceboxV3Contract = async (
       }
       case V2V3ContractName.JBController3_1: {
         contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBController3_1.json`
+          `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBController3_1.json`
         )) as ContractJson
         break
       }
       case V2V3ContractName.JBDirectory: {
         contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBDirectory.json`
+          `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBDirectory.json`
         )) as ContractJson
         break
       }
       case V2V3ContractName.JBETHPaymentTerminal: {
         contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBETHPaymentTerminal.json`
+          `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBETHPaymentTerminal.json`
         )) as ContractJson
         break
       }
       case V2V3ContractName.JBETHPaymentTerminal3_1: {
         contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBETHPaymentTerminal3_1.json`
+          `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBETHPaymentTerminal3_1.json`
         )) as ContractJson
         break
       }
       case V2V3ContractName.JBFundingCycleStore: {
         contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBFundingCycleStore.json`
+          `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBFundingCycleStore.json`
         )) as ContractJson
         break
       }
       case V2V3ContractName.JBFundAccessConstraintsStore: {
         contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBFundAccessConstraintsStore.json`
+          `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBFundAccessConstraintsStore.json`
         )) as ContractJson
         break
       }
       case V2V3ContractName.JBOperatorStore: {
         contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBOperatorStore.json`
+          `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBOperatorStore.json`
         )) as ContractJson
         break
       }
       case V2V3ContractName.JBProjects: {
         contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBProjects.json`
+          `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBProjects.json`
         )) as ContractJson
         break
       }
       case V2V3ContractName.JBSplitsStore: {
         contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBSplitsStore.json`
+          `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBSplitsStore.json`
         )) as ContractJson
         break
       }
       case V2V3ContractName.JBTokenStore: {
         contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBTokenStore.json`
+          `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBTokenStore.json`
         )) as ContractJson
         break
       }
       case V2V3ContractName.JBSingleTokenPaymentTerminalStore: {
         contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBSingleTokenPaymentTerminalStore.json`
+          `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBSingleTokenPaymentTerminalStore.json`
         )) as ContractJson
         break
       }
       case V2V3ContractName.JBETHERC20ProjectPayerDeployer: {
         contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBETHERC20ProjectPayerDeployer.json`
+          `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBETHERC20ProjectPayerDeployer.json`
         )) as ContractJson
         break
       }
       case V2V3ContractName.JBETHERC20SplitsPayerDeployer: {
         contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBETHERC20SplitsPayerDeployer.json`
+          `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBETHERC20SplitsPayerDeployer.json`
         )) as ContractJson
         break
       }
       case V2V3ContractName.JBPrices: {
         contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBPrices.json`
+          `@1-dao-protocol/juice-contracts-v3/deployments/${network}/JBPrices.json`
         )) as ContractJson
         break
       }

@@ -2,6 +2,20 @@
 # yarn lockfile v1
 
 
+"@1-dao-protocol/juice-contracts-v3@3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@1-dao-protocol/juice-contracts-v3/-/juice-contracts-v3-3.1.2.tgz#e212382c61b4421f5e35cb4aa49239915169d63b"
+  integrity sha512-yaf2lehmXlUvRE3p4/VEq8HJPWXy/SUEVEscvUNpzP7VesazmQ9bQmJarFhkIE0dftFgjlYuBrDaIKGHdu5eiA==
+
+"@1-dao-protocol/juice-delegates-registry@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@1-dao-protocol/juice-delegates-registry/-/juice-delegates-registry-1.0.2.tgz#760ebf2727906c0bf45285e43c75cddeebb4adc5"
+  integrity sha512-rJUv9iztv1wFsHXqSupUjLlW3gkDydUMWJLDwQYpP2XlPlTuBXm2Ncd7/KELDxt7VjpCLJhdxaE/Kiwm72dtFg==
+  dependencies:
+    "@1-dao-protocol/juice-contracts-v3" "3.1.2"
+    "@openzeppelin/contracts" "4.8.2"
+    "@paulrberg/contracts" "3.7.0"
+
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.0.tgz#56c133824780de3174aed5ab6834f3026790154d"
@@ -3795,10 +3809,10 @@
     "@paulrberg/contracts" "^3.7.0"
     prb-math "^2.4.3"
 
-"@jbx-protocol/juice-contracts-v3@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-contracts-v3/-/juice-contracts-v3-3.1.0.tgz#84b7805510a84f0b26ff2d74bc22e2aa82e84660"
-  integrity sha512-r9T03mFY0p5RScWYWijNPyCz/DwalJ76p0izIb3yLSLLY802c1t+DZaI516E23dP500wBUjgxj7wUseI4loEew==
+"@jbx-protocol/juice-contracts-v3@3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-contracts-v3/-/juice-contracts-v3-3.1.1.tgz#522dc36fb9fd687e8696447cbdde25e93ebe1138"
+  integrity sha512-Go5bNI2y2GgTaJX3ceMO7rBwhe4OBEn+NVHHCpIuHePBqoVuqU3V+d9uA1Nz8J3/hrrbj8P+dVvFin1kGyziLw==
 
 "@jbx-protocol/juice-contracts-v3@^2.0.0":
   version "2.0.2"
@@ -4544,6 +4558,11 @@
   resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-3.4.1-solc-0.7-2.tgz#371c67ebffe50f551c3146a9eec5fe6ffe862e92"
   integrity sha512-tAG9LWg8+M2CMu7hIsqHPaTyG4uDzjr6mhvH96LvOpLZZj6tgzTluBt+LsCf1/QaYrlis6pITvpIaIhE+iZB+Q==
 
+"@openzeppelin/contracts@4.8.2", "@openzeppelin/contracts@^4.8.0":
+  version "4.8.2"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.8.2.tgz#d815ade0027b50beb9bcca67143c6bcc3e3923d6"
+  integrity sha512-kEUOgPQszC0fSYWpbh2kT94ltOJwj1qfT2DWo+zVttmGmf97JZ99LspePNaeeaLhCImaHVeBbjaQFZQn7+Zc5g==
+
 "@openzeppelin/contracts@^4.5.0-rc.0":
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.6.0.tgz#c91cf64bc27f573836dba4122758b4743418c1b3"
@@ -4554,12 +4573,7 @@
   resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.7.3.tgz#939534757a81f8d69cc854c7692805684ff3111e"
   integrity sha512-dGRS0agJzu8ybo44pCIf3xBaPQN/65AIXNgK8+4gzKd5kbvlqyxryUYVLJv7fK98Seyd2hDZzVEHSWAh0Bt1Yw==
 
-"@openzeppelin/contracts@^4.8.0":
-  version "4.8.2"
-  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.8.2.tgz#d815ade0027b50beb9bcca67143c6bcc3e3923d6"
-  integrity sha512-kEUOgPQszC0fSYWpbh2kT94ltOJwj1qfT2DWo+zVttmGmf97JZ99LspePNaeeaLhCImaHVeBbjaQFZQn7+Zc5g==
-
-"@paulrberg/contracts@^3.4.0", "@paulrberg/contracts@^3.7.0":
+"@paulrberg/contracts@3.7.0", "@paulrberg/contracts@^3.4.0", "@paulrberg/contracts@^3.7.0":
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/@paulrberg/contracts/-/contracts-3.7.0.tgz#d7fb09d3d75f47f979a666bba19727571e419d98"
   integrity sha512-vOBN0P1xjT0rJqQs8DZ1B48qO0tHx6tabfGomsWC57EUMQzEYY/Kw8jS6uVbpeJRes1X+mPXcxmEoilAvUN7Ng==

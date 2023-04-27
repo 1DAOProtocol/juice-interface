@@ -40,6 +40,7 @@ const V2_CONTRACT_ABI_OVERRIDES: {
   JBProjects: {
     addresses: {
       [NetworkName.goerli]: '0x21263a042aFE4bAE34F08Bb318056C181bD96D3b',
+      [NetworkName.arbitrumGoerli]: '0x87cF30Fc0Bc71eF593EAF5bBED68854eFE48c3D0',
     },
   },
   JBDirectory: {

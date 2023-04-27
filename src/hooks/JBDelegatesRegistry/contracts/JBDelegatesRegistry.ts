@@ -7,7 +7,7 @@ import JBDelegatesRegistryJson from './IJBDelegatesRegistry.json'
 
 async function loadJBDelegatesRegistryDeployment() {
   const deployment = (await import(
-    `@jbx-protocol/juice-delegates-registry/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`
+    `@1-dao-protocol/juice-delegates-registry/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`
   )) as ForgeDeploy
 
   return deployment

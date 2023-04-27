@@ -3,6 +3,7 @@ import { ForgeDeploy } from 'models/contracts'
 import { NetworkName } from 'models/networkName'
 
 export const loadJBProjectHandlesContract = async (network: NetworkName) => {
+  console.info('BBBBBBBBBBBBBBBB - loadJBProjectHandlesContract');
   const contractJson = {
     abi: (
       await import(

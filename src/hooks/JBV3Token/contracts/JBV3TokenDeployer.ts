@@ -6,6 +6,7 @@ import { ForgeDeploy } from 'models/contracts'
 import { useEffect, useState } from 'react'
 
 async function loadJbV3MigrationDeployment() {
+  console.info('CCCCCCCCCCCCCCCCCCCCC - loadJbV3MigrationDeployment');
   const deployment = (await import(
     `@jbx-protocol/juice-v3-migration/broadcast/DeployJBV3TokenDeployer.sol/${readNetwork.chainId}/run-latest.json`
   )) as ForgeDeploy

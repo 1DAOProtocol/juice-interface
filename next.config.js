@@ -42,6 +42,7 @@ const CONNECT_SRC = [
   'https://api.pinata.cloud',
   'https://jbx.mypinata.cloud',
   'https://api.studio.thegraph.com',
+  'https://api.thegraph.com',
   'https://gateway.thegraph.com',
   'https://api.arcx.money',
   'https://api.tenderly.co',
@@ -57,6 +58,7 @@ const CONNECT_SRC = [
   'https://*.supabase.co',
   'https://api.ensideas.com',
   'https://*.sentry.io',
+  'https://goerli-rollup.arbitrum.io/rpc'
 ]
 if (process.env.NODE_ENV === 'development') {
   CONNECT_SRC.push('localhost:*')
