@@ -12,7 +12,7 @@ import SectionHeader from 'components/SectionHeader'
 import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
+import { useInfiniteSubgraphQuery } from 'hooks/useSubgraphQuery'
 import { SGWhereArg } from 'models/graph'
 import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
@@ -44,7 +44,7 @@ type EventFilter =
 
 const PAGE_SIZE = 10
 
-export default function ProjectActivity() {
+export function V1ProjectActivity() {
   const { projectId } = useContext(ProjectMetadataContext)
   const { tokenSymbol } = useContext(V1ProjectContext)
 
@@ -146,11 +146,11 @@ export default function ProjectActivity() {
       },
       {
         entity: 'burnEvent',
-        keys: ['id', 'timestamp', 'txHash', 'caller', 'holder', 'amount'],
+        keys: ['id', 'timestamp', 'txHash', 'from', 'holder', 'amount'],
       },
       {
         entity: 'addToBalanceEvent',
-        keys: ['amount', 'timestamp', 'caller', 'id', 'txHash'],
+        keys: ['amount', 'timestamp', 'from', 'id', 'txHash'],
       },
       {
         entity: 'deployedERC20Event',
@@ -162,7 +162,7 @@ export default function ProjectActivity() {
           'id',
           'timestamp',
           'txHash',
-          'caller',
+          'from',
           'beneficiary',
           'beneficiaryTransferAmount',
           'netTransferAmount',
@@ -174,7 +174,7 @@ export default function ProjectActivity() {
           'id',
           'timestamp',
           'txHash',
-          'caller',
+          'from',
           'beneficiary',
           'beneficiaryTicketAmount',
           'count',
@@ -194,7 +194,7 @@ export default function ProjectActivity() {
       },
       {
         entity: 'projectCreateEvent',
-        keys: ['id', 'txHash', 'timestamp', 'caller'],
+        keys: ['id', 'txHash', 'timestamp', 'from'],
       },
       {
         entity: 'v1ConfigureEvent',
@@ -202,7 +202,7 @@ export default function ProjectActivity() {
           'id',
           'timestamp',
           'txHash',
-          'caller',
+          'from',
           'ballot',
           'discountRate',
           'duration',

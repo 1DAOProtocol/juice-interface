@@ -1,12 +1,12 @@
 import { Trans, t } from '@lingui/macro'
 import { Modal, Space } from 'antd'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import { TokenAmount } from 'components/TokenAmount'
 import TicketModsList from 'components/v1/shared/TicketModsList'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOfProject'
-import { useDistributeTokensTx } from 'hooks/v1/transactor/DistributeTokensTx'
+import useReservedTokensOfProject from 'hooks/v1/contractReader/useReservedTokensOfProject'
+import { useDistributeTokensTx } from 'hooks/v1/transactor/useDistributeTokensTx'
 import { useContext, useState } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
@@ -89,7 +89,7 @@ export default function DistributeTokensModal({
         ) : (
           <p>
             <Trans>All {tokensText} will go to the project owner:</Trans>{' '}
-            <FormattedAddress address={owner} />
+            <EthereumAddress address={owner} />
           </p>
         )}
       </Space>

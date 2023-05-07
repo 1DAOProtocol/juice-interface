@@ -9,8 +9,8 @@ import { Trans, t } from '@lingui/macro'
 import Input from 'antd/lib/input/Input'
 import Modal from 'antd/lib/modal/Modal'
 import { PV_V2 } from 'constants/pv'
-import { useModal } from 'hooks/Modal'
-import { useDBProjectsQuery } from 'hooks/Projects'
+import { useModal } from 'hooks/useModal'
+import { useDBProjectsQuery } from 'hooks/useProjects'
 import { trackFathomGoal } from 'lib/fathom'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -224,7 +224,7 @@ export default function QuickProjectSearch({
                     )}
 
                     <div className="text-xs font-medium text-slate-200 dark:text-slate-200">
-                      <ETHAmount amount={p.totalPaid} precision={0} />
+                      <ETHAmount amount={p.volume} precision={0} />
                     </div>
 
                     <ProjectVersionBadge

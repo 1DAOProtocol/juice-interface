@@ -2,9 +2,9 @@ import useNftRewards from 'contexts/NftRewards/NftRewards'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useNftCollectionMetadataUri } from 'hooks/JB721Delegate/contractReader/NftCollectionMetadataUri'
-import { useNftFlagsOf } from 'hooks/JB721Delegate/contractReader/NftFlagsOf'
-import { useNftTiers } from 'hooks/JB721Delegate/contractReader/NftTiers'
+import { useNftCollectionMetadataUri } from 'hooks/JB721Delegate/contractReader/useNftCollectionMetadataUri'
+import { useNftFlagsOf } from 'hooks/JB721Delegate/contractReader/useNftFlagsOf'
+import { useNftTiers } from 'hooks/JB721Delegate/contractReader/useNftTiers'
 import { JB721GovernanceType } from 'models/nftRewards'
 import { useContext } from 'react'
 import {
@@ -14,7 +14,9 @@ import {
 import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 import { JB721DelegateContractsContext } from './JB721DelegateContracts/JB721DelegateContractsContext'
 
-export const NftRewardsProvider: React.FC = ({ children }) => {
+export const NftRewardsProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
   const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
   const { version: JB721DelegateVersion } = useContext(

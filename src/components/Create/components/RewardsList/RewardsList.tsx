@@ -2,7 +2,7 @@ import { PlusCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Divider } from 'antd'
 import { CreateButton } from 'components/buttons/CreateButton'
-import { useModal } from 'hooks/Modal'
+import { useModal } from 'hooks/useModal'
 import { FormItemInput } from 'models/formItemInput'
 import { NftRewardTier } from 'models/nftRewards'
 import { createContext, useCallback, useContext, useState } from 'react'
@@ -40,7 +40,7 @@ interface RewardsListChildrenExports {
   useRewardsInstance: typeof useRewardsInstance
 }
 
-export const RewardsList: React.FC<RewardsListProps> &
+export const RewardsList: React.FC<React.PropsWithChildren<RewardsListProps>> &
   RewardsListChildrenExports = ({
   allowCreate = false,
   value,

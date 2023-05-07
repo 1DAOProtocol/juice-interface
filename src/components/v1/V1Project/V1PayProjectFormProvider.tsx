@@ -1,4 +1,4 @@
-import { usePayProjectForm } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
+import { usePayProjectForm } from 'components/Project/PayProjectForm/hooks/usePayProjectForm'
 import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
 import { V1PayButton } from 'components/v1/V1Project/V1PayButton'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
@@ -6,7 +6,9 @@ import { useContext } from 'react'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { weightAmountPerbicent } from 'utils/v1/math'
 
-export const V1PayProjectFormProvider: React.FC = ({ children }) => {
+export const V1PayProjectFormProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const { currentFC, tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
 
   const payProjectForm = usePayProjectForm()

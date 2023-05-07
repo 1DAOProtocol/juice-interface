@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Button, Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
@@ -10,11 +9,12 @@ import { ItemNoInput } from 'components/formItems/ItemNoInput'
 import NumberSlider from 'components/inputs/NumberSlider'
 import { DISCOUNT_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import ReservedTokensFormItem from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer/TokenForm/ReservedTokensFormItem'
+import { BigNumber } from 'ethers'
 import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useAppDispatch } from 'redux/hooks/AppDispatch'
-import { useAppSelector } from 'redux/hooks/AppSelector'
+import { useAppDispatch } from 'redux/hooks/useAppDispatch'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
   DEFAULT_FUNDING_CYCLE_DATA,
   DEFAULT_FUNDING_CYCLE_METADATA,

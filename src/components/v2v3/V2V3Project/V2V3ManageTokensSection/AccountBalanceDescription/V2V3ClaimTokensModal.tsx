@@ -1,17 +1,17 @@
 import { WarningOutlined } from '@ant-design/icons'
-import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Descriptions, Form } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { TokenAmount } from 'components/TokenAmount'
 import TransactionModal from 'components/TransactionModal'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useUnclaimedTokenBalance } from 'hooks/v2v3/contractReader/UnclaimedTokenBalance'
-import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
-import { useClaimTokensTx } from 'hooks/v2v3/transactor/ClaimTokensTx'
+import { BigNumber } from 'ethers'
+import { useUnclaimedTokenBalance } from 'hooks/v2v3/contractReader/useUnclaimedTokenBalance'
+import { useClaimTokensTx } from 'hooks/v2v3/transactor/useClaimTokensTx'
+import { useProjectHasErc20 } from 'hooks/v2v3/useProjectHasErc20'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
@@ -149,7 +149,7 @@ export function V2V3ClaimTokensModal({
             <Descriptions.Item
               label={<Trans>{tokenSymbol} ERC-20 address</Trans>}
             >
-              <FormattedAddress address={tokenAddress} />
+              <EthereumAddress address={tokenAddress} />
             </Descriptions.Item>
           )}
         </Descriptions>

@@ -1,17 +1,17 @@
 import { DeleteOutlined } from '@ant-design/icons'
-import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Button, Form, Modal } from 'antd'
 import { Callout } from 'components/Callout'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import { AllocationSplit } from 'components/v2v3/shared/Allocation'
 import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
+import { BigNumber } from 'ethers'
 import { FormItemInput } from 'models/formItemInput'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo, useState } from 'react'
-import { useEditingPayoutSplits } from 'redux/hooks/EditingPayoutSplits'
+import { useEditingPayoutSplits } from 'redux/hooks/useEditingPayoutSplits'
 import { inputMustExistRule } from 'utils/antdRules'
 import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 
@@ -49,7 +49,7 @@ const V1MigrationCard = ({
   )
 
   const handleOnFinish = useCallback(
-    values => {
+    (values: V1MigrationCardForm) => {
       onSaveClick?.({
         beneficiary,
         projectIds: values.projectIds.map(
@@ -73,7 +73,7 @@ const V1MigrationCard = ({
     >
       <div className="mb-4 flex items-center gap-2 text-lg font-medium">
         <span>Beneficiary:</span>
-        <FormattedAddress address={beneficiary} />
+        <EthereumAddress address={beneficiary} />
       </div>
       <Form.List name="projectIds">
         {(fields, { remove }) => (

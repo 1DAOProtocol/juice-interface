@@ -1,12 +1,11 @@
 import { CrownOutlined } from '@ant-design/icons'
-import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Button, Checkbox, Form } from 'antd'
 import { FormInstance, FormProps, useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import USDAmount from 'components/currency/USDAmount'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import Sticker from 'components/icons/Sticker'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
@@ -19,9 +18,10 @@ import TooltipIcon from 'components/TooltipIcon'
 import { ProjectPreferences } from 'constants/projectPreferences'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { BigNumber } from 'ethers'
 import { isAddress } from 'ethers/lib/utils'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
+import { useProjectHasErc20 } from 'hooks/v2v3/useProjectHasErc20'
 import { useContext, useState } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { isZeroAddress } from 'utils/address'
@@ -29,7 +29,7 @@ import { classNames } from 'utils/classNames'
 import { formatWad, parseWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { weightAmountPermyriad } from 'utils/v2v3/math'
-import { useNftRewardTiersToMint } from './hooks/NftRewardTiersToMint'
+import { useNftRewardTiersToMint } from './hooks/useNftRewardTiersToMint.tsx'
 import { NftRewardCell } from './NftRewardCell'
 import { TCCheckboxContent } from './TCCheckboxContent'
 
@@ -130,7 +130,7 @@ export const V2V3PayForm = ({
                   </Form.Item>
 
                   {beneficiary && !customBeneficiaryEnabled && (
-                    <FormattedAddress address={beneficiary} />
+                    <EthereumAddress address={beneficiary} />
                   )}
 
                   {customBeneficiaryEnabled ? (

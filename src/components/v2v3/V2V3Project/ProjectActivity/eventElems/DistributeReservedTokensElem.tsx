@@ -1,8 +1,8 @@
 import { Trans } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import useSubgraphQuery from 'hooks/SubgraphQuery'
+import useSubgraphQuery from 'hooks/useSubgraphQuery'
 import { DistributeReservedTokensEvent } from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
 import { useContext } from 'react'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
@@ -17,7 +17,7 @@ export default function DistributeReservedTokensEventElem({
         | 'id'
         | 'timestamp'
         | 'txHash'
-        | 'caller'
+        | 'from'
         | 'beneficiary'
         | 'beneficiaryTokenCount'
         | 'tokenCount'
@@ -80,7 +80,7 @@ export default function DistributeReservedTokensEventElem({
           {distributeEvents?.map(e => (
             <div key={e.id} className="flex items-baseline justify-between">
               <div>
-                <FormattedAddress
+                <EthereumAddress
                   className="text-grey-900 dark:text-slate-100"
                   address={e.beneficiary}
                 />
@@ -101,7 +101,7 @@ export default function DistributeReservedTokensEventElem({
           {event.beneficiaryTokenCount?.gt(0) && (
             <div className="flex items-baseline justify-between">
               <div>
-                <FormattedAddress
+                <EthereumAddress
                   className="text-grey-900 dark:text-slate-100"
                   address={event.beneficiary}
                 />

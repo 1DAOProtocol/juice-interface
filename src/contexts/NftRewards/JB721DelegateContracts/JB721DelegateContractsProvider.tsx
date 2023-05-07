@@ -1,12 +1,14 @@
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/JB721TieredDelegate'
-import { useStoreOfJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/StoreofJB721TieredDelegate'
 import { useJB721DelegateVersion } from 'hooks/JB721Delegate/JB721DelegateVersion'
+import { useJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/useJB721TieredDelegate'
+import { useStoreOfJB721TieredDelegate } from 'hooks/JB721Delegate/contracts/useStoreofJB721TieredDelegate'
 import { useContext } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { JB721DelegateContractsContext } from './JB721DelegateContractsContext'
 
-export const JB721DelegateContractsProvider: React.FC = ({ children }) => {
+export const JB721DelegateContractsProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
 
   const dataSourceAddress = fundingCycleMetadata?.dataSource

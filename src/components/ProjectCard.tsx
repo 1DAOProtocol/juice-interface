@@ -1,13 +1,14 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
 import { Skeleton } from 'antd'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
-import { useProjectHandleText } from 'hooks/ProjectHandleText'
-import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import useSubgraphQuery from 'hooks/SubgraphQuery'
+import { constants } from 'ethers'
+
+import { BigNumber } from 'ethers'
+import { useProjectHandleText } from 'hooks/useProjectHandleText'
+import { useProjectMetadata } from 'hooks/useProjectMetadata'
+import useSubgraphQuery from 'hooks/useSubgraphQuery'
 import { ProjectTagName } from 'models/project-tags'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
@@ -20,7 +21,7 @@ import ETHAmount from './currency/ETHAmount'
 
 export type ProjectCardProject = Pick<
   Project,
-  'id' | 'handle' | 'totalPaid' | 'createdAt' | 'terminal' | 'projectId' | 'pv'
+  'id' | 'handle' | 'volume' | 'createdAt' | 'terminal' | 'projectId' | 'pv'
 > & { tags?: ProjectTagName[] | null; metadataUri: string | null }
 
 function ArchivedBadge() {
@@ -41,7 +42,7 @@ function useProjectCardData(project?: ProjectCardProject | BigNumber) {
             'id',
             'handle',
             'metadataUri',
-            'totalPaid',
+            'volume',
             'createdAt',
             'terminal',
             'projectId',
@@ -81,8 +82,8 @@ export default function ProjectCard({
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
   const precision =
-    projectCardData.totalPaid?.gt(0) &&
-    projectCardData.totalPaid.lt(constants.WeiPerEther)
+    projectCardData.volume?.gt(0) &&
+    projectCardData.volume.lt(constants.WeiPerEther)
       ? 2
       : 0
 
@@ -153,7 +154,7 @@ export default function ProjectCard({
             <div>
               <span className="font-medium text-black dark:text-slate-100">
                 <ETHAmount
-                  amount={projectCardData.totalPaid}
+                  amount={projectCardData.volume}
                   precision={precision}
                 />{' '}
               </span>
@@ -167,10 +168,7 @@ export default function ProjectCard({
 
             {tags?.length ? (
               <div className="mt-1">
-                <ProjectTagsList
-                  tagClassName="text-xs text-grey-400 dark:text-slate-200 border-solid border border-grey-400 dark:border-slate-200 bg-transparent"
-                  tags={tags}
-                />
+                <ProjectTagsList tagClassName="text-xs" tags={tags} />
               </div>
             ) : metadata?.description ? (
               <div className="max-h-5 overflow-hidden overflow-ellipsis text-grey-400 dark:text-slate-200">

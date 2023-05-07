@@ -1,23 +1,21 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Radio } from 'antd'
-import ExternalLink from 'components/ExternalLink'
 import { FormItemExt } from 'components/formItems/formItemExt'
 import TooltipIcon from 'components/TooltipIcon'
 import { Allocation, AllocationSplit } from 'components/v2v3/shared/Allocation'
 import DistributionLimit from 'components/v2v3/shared/DistributionLimit'
 import { OwnerPayoutCard } from 'components/v2v3/shared/PayoutCard'
 import { PayoutCard } from 'components/v2v3/shared/PayoutCard/PayoutCard'
+import { FEES_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { CurrencyName } from 'constants/currency'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import Link from 'next/link'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { ceilIfCloseToNextInteger } from 'utils/math'
-import { helpPagePath, v2v3ProjectRoute } from 'utils/routes'
 import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2v3/math'
@@ -65,6 +63,15 @@ export function DistributionSplitsSection({
     useState<boolean>(false)
 
   const allSplits = lockedSplits.concat(editableSplits)
+
+  const availableModes: Set<'amount' | 'percentage'> = useMemo(() => {
+    switch (distributionType) {
+      case 'amount':
+        return new Set(['amount', 'percentage'])
+      case 'percent':
+        return new Set(['percentage'])
+    }
+  }, [distributionType])
 
   const payoutsSelection: PayoutsSelection = useMemo(() => {
     // As we dont have control of amounts/percentage out of create, always use
@@ -200,7 +207,7 @@ export function DistributionSplitsSection({
               ))}
             <Allocation.List
               allocationName={t`payout`}
-              availableModes={new Set(['percentage'])}
+              availableModes={availableModes}
             >
               {(
                 modal,
@@ -245,22 +252,7 @@ export function DistributionSplitsSection({
           <Trans>
             Payouts to Ethereum addresses incur a 2.5% JBX membership fee
           </Trans>{' '}
-          <TooltipIcon
-            tip={
-              <Trans>
-                Payouts to other Juicebox projects don't incur fees. In return
-                for fees, your project will receive JBX (the{' '}
-                <Link href={v2v3ProjectRoute({ projectId: 1 })}>
-                  JuiceboxDAO
-                </Link>{' '}
-                governance token) at the current issuance rate.{' '}
-                <ExternalLink href={helpPagePath(`/dao/reference/jbx/`)}>
-                  Learn more
-                </ExternalLink>
-                .
-              </Trans>
-            }
-          />
+          <TooltipIcon tip={FEES_EXPLANATION} />
         </p>
 
         <div className="flex justify-between">

@@ -1,9 +1,9 @@
-import { AddressZero } from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { Callout } from 'components/Callout'
-import { useAppDispatch } from 'redux/hooks/AppDispatch'
-import { useAppSelector } from 'redux/hooks/AppSelector'
+import { constants } from 'ethers'
+import { useAppDispatch } from 'redux/hooks/useAppDispatch'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 
 export function DangerZoneSection({ close }: { close?: VoidFunction }) {
@@ -17,7 +17,7 @@ export function DangerZoneSection({ close }: { close?: VoidFunction }) {
     dispatch(
       editingV2ProjectActions.setFundingCycleMetadata({
         ...fundingCycleMetadata,
-        dataSource: AddressZero,
+        dataSource: constants.AddressZero,
       }),
     )
     close?.()

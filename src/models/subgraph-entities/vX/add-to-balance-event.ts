@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { PV } from 'models/pv'
 import { parseBigNumberKeyVals } from 'utils/graph'
 
@@ -16,7 +16,6 @@ export interface AddToBalanceEvent
     TerminalEventEntity {
   pv: PV
   fundingCycleId: BigNumber
-  caller: string
   amount: BigNumber
   amountUSD: BigNumber
   note: string

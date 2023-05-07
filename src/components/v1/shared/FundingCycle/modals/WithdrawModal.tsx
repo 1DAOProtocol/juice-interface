@@ -1,17 +1,17 @@
 import { t, Trans } from '@lingui/macro'
 import { Space } from 'antd'
+import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import ETHAmount from 'components/currency/ETHAmount'
 import CurrencySymbol from 'components/CurrencySymbol'
-import FormattedAddress from 'components/FormattedAddress'
-import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
+import EthereumAddress from 'components/EthereumAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import PayoutModsList from 'components/v1/shared/PayoutModsList'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useTapProjectTx } from 'hooks/v1/transactor/TapProjectTx'
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
+import { useTapProjectTx } from 'hooks/v1/transactor/useTapProjectTx'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useEffect, useState } from 'react'
 import {
@@ -208,7 +208,7 @@ export default function WithdrawModal({
           <p>
             <Trans>
               <ETHAmount amount={convertedAmountSubFee} /> will go to the
-              project owner: <FormattedAddress address={owner} />
+              project owner: <EthereumAddress address={owner} />
             </Trans>
           </p>
         )}

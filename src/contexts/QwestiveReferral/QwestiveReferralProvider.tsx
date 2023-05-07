@@ -1,17 +1,18 @@
 import { useWallet } from 'hooks/Wallet'
 import { useEffect } from 'react'
-import { useQwestiveSDKProvider } from './QwestiveReferral'
 import { SDKContext } from './QwestiveReferralContext'
+import { useQwestiveSDKProvider } from './useQwestiveReferral'
 
-const QwestiveSDKContextProvider: React.FC = ({ children }) => {
+const QwestiveSDKContextProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const { userAddress } = useWallet()
   const scriptContext = useQwestiveSDKProvider()
 
   useEffect(() => {
-    if (!userAddress) return
-
-    scriptContext.qwestiveTracker?.setAlias?.({
-      id: userAddress,
+    if (!userAddress || scriptContext.qwestiveTracker.isLoading) return
+    scriptContext.qwestiveTracker?.setReferral?.({
+      publicKey: userAddress,
     })
   }, [userAddress, scriptContext.qwestiveTracker])
 

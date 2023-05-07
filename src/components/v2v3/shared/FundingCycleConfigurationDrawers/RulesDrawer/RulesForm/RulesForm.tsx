@@ -1,4 +1,3 @@
-import { isAddress } from '@ethersproject/address'
 import { Trans } from '@lingui/macro'
 import { Button, Form, Switch } from 'antd'
 import FormItemLabel from 'components/FormItemLabel'
@@ -17,11 +16,12 @@ import {
   DEFAULT_BALLOT_STRATEGY,
   ballotStrategiesFn,
 } from 'constants/v2v3/ballotStrategies'
+import { isAddress } from 'ethers/lib/utils'
 import isEqual from 'lodash/isEqual'
 import { BallotStrategy } from 'models/ballot'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useAppDispatch } from 'redux/hooks/AppDispatch'
-import { useAppSelector } from 'redux/hooks/AppSelector'
+import { useAppDispatch } from 'redux/hooks/useAppDispatch'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import TokenMintingExtra from './TokenMintingExtra'

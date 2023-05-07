@@ -1,5 +1,4 @@
 import { SettingOutlined } from '@ant-design/icons'
-import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Button, Skeleton, Tooltip } from 'antd'
 import { CardSection } from 'components/CardSection'
@@ -9,8 +8,9 @@ import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2v3/shared/SplitList'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { BigNumber } from 'ethers'
 import { useProjectReservedTokens } from 'hooks/v2v3/contractReader/ProjectReservedTokens'
-import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
+import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/useV2ConnectedWalletHasPermission'
 import { Split } from 'models/splits'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
@@ -90,11 +90,12 @@ export default function ReservedTokensSplitsCard({
                         tokenSymbol={tokenSymbol}
                         precision={2}
                       />{' '}
-                      <span className="text-xs uppercase text-grey-500 dark:text-slate-100">
+                      <span className="text-xs font-medium uppercase text-grey-500 dark:text-slate-100">
                         reserved
                       </span>
                     </Trans>{' '}
                     <TooltipIcon
+                      iconClassName="text-grey-500 dark:text-slate-100"
                       tip={
                         <Trans>
                           Project tokens currently reserved for the recipients

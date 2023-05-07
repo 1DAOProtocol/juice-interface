@@ -1,8 +1,8 @@
 import { Trans } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import useSubgraphQuery from 'hooks/SubgraphQuery'
+import useSubgraphQuery from 'hooks/useSubgraphQuery'
 import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
 import { useContext } from 'react'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
@@ -17,7 +17,7 @@ export default function ReservesEventElem({
         | 'id'
         | 'timestamp'
         | 'txHash'
-        | 'caller'
+        | 'from'
         | 'beneficiary'
         | 'beneficiaryTicketAmount'
         | 'count'
@@ -80,7 +80,7 @@ export default function ReservesEventElem({
               className="text-sm"
             >
               <div>
-                <FormattedAddress
+                <EthereumAddress
                   className="text-grey-900 dark:text-slate-100"
                   address={e.modBeneficiary}
                 />
@@ -107,7 +107,7 @@ export default function ReservesEventElem({
               className="text-sm"
             >
               <div>
-                <FormattedAddress
+                <EthereumAddress
                   className="text-grey-900 dark:text-slate-100"
                   address={event.beneficiary}
                 />

@@ -1,21 +1,21 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Button, Descriptions, Space, Statistic } from 'antd'
 import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import ManageTokensModal from 'components/ManageTokensModal'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 import SectionHeader from 'components/SectionHeader'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import useERC20BalanceOf from 'hooks/ERC20/ERC20BalanceOf'
-import useCanPrintPreminedTokens from 'hooks/v1/contractReader/CanPrintPreminedTokens'
-import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOfProject'
-import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
-import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfProjectToken'
-import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
-import { useV1UnclaimedBalance } from 'hooks/v1/contractReader/V1UnclaimedBalance'
-import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
+import { BigNumber } from 'ethers'
+import useERC20BalanceOf from 'hooks/ERC20/useERC20BalanceOf'
+import useCanPrintPreminedTokens from 'hooks/v1/contractReader/useCanPrintPreminedTokens'
+import useReservedTokensOfProject from 'hooks/v1/contractReader/useReservedTokensOfProject'
+import useTotalBalanceOf from 'hooks/v1/contractReader/useTotalBalanceOf'
+import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/useTotalSupplyOfProjectToken'
+import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/useV1ConnectedWalletHasPermission'
+import { useV1UnclaimedBalance } from 'hooks/v1/contractReader/useV1UnclaimedBalance'
+import { useTransferTokensTx } from 'hooks/v1/transactor/useTransferTokensTx'
 import { useWallet } from 'hooks/Wallet'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { CSSProperties, useContext, useState } from 'react'
@@ -107,7 +107,7 @@ export function TokensSection() {
               {ticketsIssued && (
                 <Descriptions.Item label={t`Address`} labelStyle={labelStyle}>
                   <div className="w-full">
-                    <FormattedAddress address={tokenAddress} />
+                    <EthereumAddress address={tokenAddress} />
                   </div>
                 </Descriptions.Item>
               )}

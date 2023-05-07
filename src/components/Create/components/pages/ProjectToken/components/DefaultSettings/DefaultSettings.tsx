@@ -11,9 +11,11 @@ import {
 import { ReactNode, useMemo } from 'react'
 import { formatAmount } from 'utils/format/formatAmount'
 import { formatBoolean } from 'utils/format/formatBoolean'
-import * as ProjectTokenForm from '../../hooks/ProjectTokenForm'
+import * as ProjectTokenForm from '../../hooks/useProjectTokenForm'
 
-export const DefaultSettings: React.FC = () => {
+export const DefaultSettings: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const data: Record<string, { data: string; tooltip: ReactNode }> = useMemo(
     () => ({
       [t`Total issuance rate`]: {

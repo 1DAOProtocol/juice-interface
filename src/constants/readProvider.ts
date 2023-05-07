@@ -1,5 +1,9 @@
-import { JsonRpcBatchProvider } from '@ethersproject/providers'
+import { providers } from 'ethers'
 import { NETWORKS, readNetwork } from './networks'
 
-export const readProvider = new JsonRpcBatchProvider(readNetwork.rpcUrl)
-export const ensReadProvider = new JsonRpcBatchProvider(NETWORKS[5].rpcUrl)
+export const readProvider = new providers.JsonRpcBatchProvider(
+  readNetwork.rpcUrl,
+)
+export const ensReadProvider = new providers.JsonRpcBatchProvider(
+  NETWORKS[5].rpcUrl,
+)

@@ -1,7 +1,6 @@
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
-import AddERC20ToWalletButton from './AddERC20ToWalletButton'
 
 export function ProjectTokenDescription() {
   const { tokenSymbol, tokenAddress } = useContext(V2V3ProjectContext)
@@ -9,8 +8,7 @@ export function ProjectTokenDescription() {
   return (
     <div>
       {tokenSymbol} (
-      <FormattedAddress address={tokenAddress} />)
-      <AddERC20ToWalletButton />
+      <EthereumAddress address={tokenAddress} />)
     </div>
   )
 }

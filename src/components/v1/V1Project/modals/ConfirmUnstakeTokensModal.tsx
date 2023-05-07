@@ -1,13 +1,13 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal, Space } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { TokenAmount } from 'components/TokenAmount'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { useV1UnclaimedBalance } from 'hooks/v1/contractReader/V1UnclaimedBalance'
-import { useUnstakeTokensTx } from 'hooks/v1/transactor/UnstakeTokensTx'
+import { useV1UnclaimedBalance } from 'hooks/v1/contractReader/useV1UnclaimedBalance'
+import { useUnstakeTokensTx } from 'hooks/v1/transactor/useUnstakeTokensTx'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useEffect, useState } from 'react'
 import { isZeroAddress } from 'utils/address'
@@ -122,7 +122,7 @@ export default function ConfirmUnstakeTokensModal({
             <div>
               <Trans>
                 <label>{tokenSymbol} ERC-20 address:</label>{' '}
-                <FormattedAddress address={tokenAddress} />
+                <EthereumAddress address={tokenAddress} />
               </Trans>
             </div>
           )}

@@ -3,7 +3,7 @@ import { Modal } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { useBlockNumber } from 'hooks/BlockNumber'
+import { useBlockNumber } from 'hooks/useBlockNumber'
 import { SGQueryOpts } from 'models/graph'
 import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useCallback, useContext, useEffect, useState } from 'react'
@@ -60,7 +60,7 @@ export function DownloadParticipantsModal({
         entity: 'participant',
         keys: [
           'wallet { id }',
-          'totalPaid',
+          'volume',
           'balance',
           'stakedBalance',
           'erc20Balance',
@@ -95,7 +95,7 @@ export function DownloadParticipantsModal({
           fromWad(p.balance),
           fromWad(p.stakedBalance),
           fromWad(p.erc20Balance),
-          fromWad(p.totalPaid),
+          fromWad(p.volume),
           date,
         ])
       })

@@ -5,16 +5,14 @@ import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { V2V3ProjectHeaderActions } from 'components/v2v3/V2V3Project/V2V3ProjectHeaderActions'
 import { ProjectSettingsContent } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsContent'
 import { CV_V3 } from 'constants/cv'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useIsUserAddress } from 'hooks/IsUserAddress'
-import useMobile from 'hooks/Mobile'
+import { useIsUserAddress } from 'hooks/useIsUserAddress'
+import useMobile from 'hooks/useMobile'
 import { useRouter } from 'next/router'
 import { useContext, useMemo, useState } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { pushMenuContent, v2v3ProjectRoute } from 'utils/routes'
 import { BackToProjectButton } from '../../../buttons/BackToProjectButton'
 
@@ -95,8 +93,7 @@ export function V2V3ProjectSettings() {
   }
 
   const items = useMemo(() => {
-    const includeTokenMigration =
-      featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP) && cv === CV_V3
+    const includeTokenMigration = cv === CV_V3
     const _items: MenuItem[] = [
       menuItem(
         'Project',

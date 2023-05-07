@@ -3,9 +3,11 @@ import { Form } from 'antd'
 import { Callout } from 'components/Callout'
 import { useMemo } from 'react'
 import { formattedNum } from 'utils/format/formatNumber'
-import { ProjectTokensFormProps } from '../../../../hooks/ProjectTokenForm'
+import { ProjectTokensFormProps } from '../../../../hooks/useProjectTokenForm'
 
-export const ReservedTokenRateCallout: React.FC = () => {
+export const ReservedTokenRateCallout: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   const form = Form.useFormInstance<ProjectTokensFormProps>()
   const initialMintRate = Form.useWatch('initialMintRate', form)
   const reservedTokensPercentage = Form.useWatch(

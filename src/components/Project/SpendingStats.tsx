@@ -1,10 +1,10 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import ETHToUSD from 'components/currency/ETHToUSD'
 import TooltipLabel from 'components/TooltipLabel'
 import { CurrencyName } from 'constants/currency'
+import { BigNumber } from 'ethers'
 import { formatWad } from 'utils/format/formatNumber'
 import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 
@@ -30,7 +30,7 @@ export default function SpendingStats({
 
   return (
     <div>
-      <div className="mb-1">
+      <div className="mb-1 flex gap-x-1">
         <Tooltip
           title={
             currency === 'ETH' && distributableAmount?.gt(0) ? (
@@ -38,7 +38,7 @@ export default function SpendingStats({
             ) : undefined
           }
         >
-          <span className="text-primary font-medium">
+          <span className="text-base font-medium">
             <AmountInCurrency
               amount={distributableAmount}
               currency={currency}

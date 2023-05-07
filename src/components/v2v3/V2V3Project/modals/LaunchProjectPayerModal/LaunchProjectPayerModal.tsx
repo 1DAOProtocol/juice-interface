@@ -1,5 +1,4 @@
 import { ToolOutlined } from '@ant-design/icons'
-import { TransactionReceipt } from '@ethersproject/providers'
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
@@ -9,8 +8,9 @@ import EtherscanLink from 'components/EtherscanLink'
 import { PROJECT_PAYER_ADDRESS_EXPLANATION } from 'components/Explanations'
 import TransactionModal from 'components/TransactionModal'
 import { readProvider } from 'constants/readProvider'
-import { TransactorInstance } from 'hooks/Transactor'
-import { DeployProjectPayerTxArgs } from 'hooks/v2v3/transactor/DeployProjectPayerTx'
+import { providers } from 'ethers'
+import { TransactorInstance } from 'hooks/useTransactor'
+import { DeployProjectPayerTxArgs } from 'hooks/v2v3/transactor/useDeployProjectPayerTx'
 import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import AdvancedOptionsCollapse from './AdvancedOptionsCollapse'
@@ -22,7 +22,7 @@ const DEPLOY_EVENT_IDX = 0
  * @param txReceipt receipt of `deployProjectPayer` transaction
  */
 const getProjectPayerAddressFromReceipt = (
-  txReceipt: TransactionReceipt,
+  txReceipt: providers.TransactionReceipt,
 ): string => {
   const newProjectPayerAddress = txReceipt?.logs[DEPLOY_EVENT_IDX]?.address
   return newProjectPayerAddress

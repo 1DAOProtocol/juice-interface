@@ -1,4 +1,4 @@
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from 'ethers'
 import { ContractJson } from 'models/contracts'
 import { NetworkName } from 'models/networkName'
 import { SignerOrProvider } from 'models/signerOrProvider'
@@ -12,16 +12,15 @@ export const loadV2V3Contract = async (
   signerOrProvider: SignerOrProvider,
   version: CV2V3,
 ): Promise<Contract | undefined> => {
-
-  console.info('contractName:', contractName);
-  console.info('network:', network);
-  console.info('signerOrProvider:', signerOrProvider);
-  console.info('version:', version);
+  console.info('contractName:', contractName)
+  console.info('network:', network)
+  console.info('signerOrProvider:', signerOrProvider)
+  console.info('version:', version)
 
   const contractJson: ContractJson | undefined =
     await loadJuiceboxV2OrV3Contract(version, contractName, network)
 
-  console.info('contractJson:', contractJson);
+  console.info('contractJson:', contractJson)
   if (!contractJson || !contractJson.address || !contractJson.abi) {
     console.info(
       `Contract load skipped [contract=${contractName} network=${network}, version=${version}]`,

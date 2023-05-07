@@ -1,12 +1,10 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Checkbox, Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm, useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import USDAmount from 'components/currency/USDAmount'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import Sticker from 'components/icons/Sticker'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { AttachStickerModal } from 'components/modals/AttachStickerModal'
@@ -18,8 +16,11 @@ import ProjectRiskNotice from 'components/ProjectRiskNotice'
 import { ProjectPreferences } from 'constants/v1/projectPreferences'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { usePayV1ProjectTx } from 'hooks/v1/transactor/PayV1ProjectTx'
+import { constants } from 'ethers'
+
+import { BigNumber } from 'ethers'
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
+import { usePayV1ProjectTx } from 'hooks/v1/transactor/usePayV1ProjectTx'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
@@ -225,7 +226,7 @@ export default function V1ConfirmPayOwnerModal({
             <div>
               {userAddress ? (
                 <Trans>
-                  To: <FormattedAddress address={userAddress} />
+                  To: <EthereumAddress address={userAddress} />
                 </Trans>
               ) : null}
             </div>

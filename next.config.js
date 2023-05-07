@@ -20,7 +20,6 @@ const INFURA_IPFS_URLS = [
 
 const SCRIPT_SRC = [
   'https://*.juicebox.money',
-  'https://qwestive-referral-prod.web.app',
   'https://static.hotjar.com',
   'https://script.hotjar.com',
   // Not working as unsafe-eval is required for metamask
@@ -64,11 +63,12 @@ const CONNECT_SRC = [
   'https://*.snapshot.org',
   'https://*.wallet.coinbase.com',
   ...WALLET_CONNECT_URLS,
-  'https://juicenews.beehiiv.com',
   'https://*.supabase.co',
   'https://api.ensideas.com',
   'https://*.sentry.io',
-  'https://goerli-rollup.arbitrum.io/rpc'
+  // QWESTIVE REFERRAL
+  'https://us-central1-qwestive-referral-prod.cloudfunctions.net/',
+  'https://goerli-rollup.arbitrum.io/rpc',
 ]
 
 const FRAME_ANCESTORS = ['https://*.gnosis.io', 'https://*.safe.global']
@@ -77,7 +77,7 @@ if (process.env.NODE_ENV === 'development') {
   CONNECT_SRC.push('localhost:*')
 }
 
-const FRAME_SRC = ['https://qwestive-referral-prod.web.app']
+const FRAME_SRC = []
 
 const ContentSecurityPolicy = `
   default-src 'none';
@@ -89,7 +89,9 @@ const ContentSecurityPolicy = `
   manifest-src 'self';
   prefetch-src 'self';
   frame-src ${FRAME_SRC.join(' ')};
-  media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')};
+  media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(
+    ' ',
+  )} https://s.cdpn.io;
   frame-ancestors ${FRAME_ANCESTORS.join(' ')};
   form-action 'self';
 `

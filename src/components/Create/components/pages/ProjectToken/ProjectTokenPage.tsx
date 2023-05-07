@@ -6,16 +6,18 @@ import { Callout } from 'components/Callout'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { trackFathomGoal } from 'lib/fathom'
 import { useContext, useEffect } from 'react'
-import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
 import { CreateBadge } from '../../CreateBadge'
 import { Icons } from '../../Icons'
 import { Selection } from '../../Selection'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { CustomTokenSettings, DefaultSettings } from './components'
-import { useProjectTokensForm } from './hooks/ProjectTokenForm'
+import { useProjectTokensForm } from './hooks/useProjectTokenForm'
 
-export const ProjectTokenPage: React.FC = () => {
+export const ProjectTokenPage: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   useSetCreateFurthestPageReached('projectToken')
   const { goToNextPage, lockPageProgress, unlockPageProgress } =
     useContext(PageContext)

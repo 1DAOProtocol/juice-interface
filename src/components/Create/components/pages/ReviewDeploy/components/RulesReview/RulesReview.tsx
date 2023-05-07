@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import { ReviewDescription } from '../ReviewDescription'
-import { useRulesReview } from './hooks/RulesReview'
+import { useRulesReview } from './hooks/useRulesReview'
 
 export const RulesReview = () => {
   const {
@@ -24,7 +24,7 @@ export const RulesReview = () => {
             {strategy ? (
               strategy
             ) : customAddress ? (
-              <FormattedAddress address={customAddress} />
+              <EthereumAddress address={customAddress} />
             ) : (
               '??'
             )}

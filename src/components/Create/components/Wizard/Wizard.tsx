@@ -1,4 +1,4 @@
-import useMobile from 'hooks/Mobile'
+import useMobile from 'hooks/useMobile'
 import React, { ReactNode } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { Page } from './Page'
@@ -6,9 +6,11 @@ import { Steps } from './Steps'
 import { WizardContext } from './contexts'
 import { useWizard } from './hooks'
 
-const WizardContainer: React.FC<{
-  className?: string
-}> = ({ children, className }) => {
+const WizardContainer: React.FC<
+  React.PropsWithChildren<{
+    className?: string
+  }>
+> = ({ children, className }) => {
   return (
     <div
       className={twJoin(
@@ -21,10 +23,12 @@ const WizardContainer: React.FC<{
   )
 }
 
-export const Wizard: React.FC<{
-  className?: string
-  doneText?: ReactNode
-}> & {
+export const Wizard: React.FC<
+  React.PropsWithChildren<{
+    className?: string
+    doneText?: ReactNode
+  }>
+> & {
   Page: typeof Page
 } = props => {
   const isMobile = useMobile()

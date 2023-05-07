@@ -1,10 +1,10 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { Callout } from 'components/Callout'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useErc20Contract } from 'hooks/ERC20/Erc20Contract'
-import { useApproveERC20Tx } from 'hooks/ERC20/transactor/ApproveTx'
+import { BigNumber } from 'ethers'
+import { useApproveERC20Tx } from 'hooks/ERC20/transactor/useApproveTx'
+import { useErc20Contract } from 'hooks/ERC20/useErc20Contract'
 import { useContext, useState } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
 

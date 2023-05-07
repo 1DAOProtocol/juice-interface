@@ -1,6 +1,6 @@
 import { LoadingOutlined } from '@ant-design/icons'
-import { BigNumber } from '@ethersproject/bignumber'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { BigNumber } from 'ethers'
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { formatWad } from 'utils/format/formatNumber'
 
 import CurrencySymbol from '../CurrencySymbol'

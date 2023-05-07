@@ -1,14 +1,14 @@
 import { t, Trans } from '@lingui/macro'
 import { Divider, Tooltip } from 'antd'
 import { Badge } from 'components/Badge'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import Paragraph from 'components/Paragraph'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
 import { ContractVersionSelect } from 'components/v2v3/V2V3Project/V2V3ProjectHeaderActions/ContractVersionSelect'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { useGnosisSafe } from 'hooks/safe/GnosisSafe'
+import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
@@ -26,7 +26,7 @@ function ProjectSubheading({
   projectOwnerAddress: string | undefined
   canEditProjectHandle?: boolean
 }) {
-  const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const { data: gnosisSafe, isLoading: gnosisSafeLoading } =
     useGnosisSafe(projectOwnerAddress)
@@ -66,10 +66,9 @@ function ProjectSubheading({
             <span className="mr-1 flex gap-1">
               <Trans>
                 <span>Owned by</span>
-                <FormattedAddress
+                <EthereumAddress
                   address={projectOwnerAddress}
                   className="inline-flex text-grey-500 dark:text-grey-300"
-                  withEnsAvatar
                 />
               </Trans>
             </span>
@@ -80,15 +79,6 @@ function ProjectSubheading({
               />
             )}
           </div>
-          {projectMetadata?.tags?.length ? (
-            <>
-              <Divider
-                type="vertical"
-                className="m-0 h-6 bg-grey-100 dark:bg-grey-900"
-              />
-              <ProjectTagsList tags={projectMetadata.tags} />
-            </>
-          ) : null}
         </>
       )}
     </div>
@@ -199,6 +189,11 @@ export function ProjectHeader({
 
         {projectMetadata?.description && !hideDescription && (
           <div className="mx-auto md:col-span-5 md:w-full md:text-start">
+            {projectMetadata?.tags?.length ? (
+              <div className="mb-3 flex justify-center md:justify-start">
+                <ProjectTagsList tags={projectMetadata.tags} withLinks />
+              </div>
+            ) : null}
             <Paragraph
               className="text-grey-900 dark:text-slate-100"
               description={projectMetadata.description}

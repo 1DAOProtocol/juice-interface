@@ -1,7 +1,7 @@
 import Icon from '@ant-design/icons'
 import { plural, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import { useQueuedSafeTransactions } from 'hooks/safe/QueuedSafeTransactions'
+import { useQueuedSafeTransactions } from 'hooks/safe/useQueuedSafeTransactions'
 import { useWallet } from 'hooks/Wallet'
 import { GnosisSafe } from 'models/safe'
 import Link from 'next/link'
@@ -14,7 +14,7 @@ import {
 function SafeIcon({ href }: { href: string }) {
   return (
     <Link href={href}>
-      <a className="text-grey-900 dark:text-slate-100">
+      <a className="text-current hover:text-bluebs-500">
         <svg
           viewBox="0 0 661.62 661.47"
           xmlns="http://www.w3.org/2000/svg"

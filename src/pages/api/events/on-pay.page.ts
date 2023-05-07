@@ -1,5 +1,4 @@
-import { getAddress } from '@ethersproject/address'
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber, utils } from 'ethers'
 import { emailServerClient } from 'lib/api/postmark'
 import { sudoPublicDbClient } from 'lib/api/supabase/clients'
 import { authCheck } from 'lib/auth'
@@ -51,7 +50,7 @@ const Schema = Yup.object().shape({
   ).required(),
   memo: Yup.string(),
   metadata: Yup.string().required(),
-  caller: Yup.string().required(),
+  from: Yup.string().required(),
   blockHash: Yup.string().required(),
   blockNumber: Yup.number(),
 })
@@ -114,7 +113,7 @@ const compileEmailMetadata = async ({
   blockHash,
 }: OnPayEvent): Promise<EmailMetadata> => {
   const formattedAmount = fromWad(amount.toString())
-  const normalizedPayerAddress = getAddress(payer)
+  const normalizedPayerAddress = utils.getAddress(payer)
   const { name: payerEnsName } = await resolveAddressEnsIdeas(
     normalizedPayerAddress,
   )

@@ -12,12 +12,12 @@ import { V1_V3_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { useRelaunchV1ViaV3Create } from 'hooks/v1/RelaunchV1ViaV3Create'
-import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
+import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/useV1ConnectedWalletHasPermission'
+import { useRelaunchV1ViaV3Create } from 'hooks/v1/useRelaunchV1ViaV3Create'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { Suspense, lazy, useContext, useState } from 'react'
 import FundingCycles from './FundingCycles'
-import ProjectActivity from './ProjectActivity'
+import { V1ProjectActivity } from './ProjectActivity'
 import { TokensSection } from './TokensSection'
 import { TreasuryStatsSection } from './TreasuryStatsSection'
 import V1ProjectHeaderActions from './V1ProjectHeaderActions'
@@ -144,7 +144,7 @@ export function V1Project() {
             <FundingCycles />
           </Col>
           <Col className="mt-10" xs={24} md={12}>
-            <ProjectActivity />
+            <V1ProjectActivity />
           </Col>
         </Row>
 

@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { PV } from 'models/pv'
 import { parseBigNumberKeyVals } from 'utils/graph'
 
@@ -20,7 +20,6 @@ export interface RedeemEvent
   amount: BigNumber
   returnAmount: BigNumber
   returnAmountUSD: BigNumber
-  caller: string
   memo: string
   metadata: string | undefined
 }

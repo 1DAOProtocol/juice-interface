@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { Database } from 'types/database.types'
 
 import { ProjectTagName } from './project-tags'
@@ -36,7 +36,7 @@ export type DBProject = {
   metadataUri: string | null
   currentBalance: BigNumber
   trendingScore: BigNumber
-  totalPaid: BigNumber
+  volume: BigNumber
   paymentsCount: number
   deployer: string | null
   terminal: string | null
