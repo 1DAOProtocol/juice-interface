@@ -30,6 +30,10 @@ export async function loadJBPrices({
       contractJson = await import(
         '@jbx-protocol/juice-contracts-v3/deployments/goerli/JBPrices.json'
       )
+    } else if (readNetwork.name === NetworkName.arbitrumGoerli) {
+      contractJson = await import(
+        '@1-dao-protocol/juice-contracts-v3/deployments/arbitrumGoerli/JBPrices.json'
+      )
     } else {
       contractJson = await import(
         '@jbx-protocol/juice-contracts-v3/deployments/mainnet/JBPrices.json'

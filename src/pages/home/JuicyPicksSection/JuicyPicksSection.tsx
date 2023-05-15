@@ -16,7 +16,7 @@ export function JuicyPicksSection() {
 
   const isCarouselBreakpoint = useMedia('(max-width: 1079px)')
 
-  if (!projects) {
+  if (!projects || projects.length === 0) {
     return null
   }
 

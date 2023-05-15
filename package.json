@@ -132,7 +132,7 @@
     "react-stop-propagation": "^0.2.0",
     "recharts": "2.5.0",
     "sass": "^1.52.1",
-    "sharp": "^0.31.1",
+    "sharp": "0.31.1",
     "swiper": "^9.2.3",
     "tailwind-merge": "^1.8.0",
     "tiny-invariant": "^1.2.0",

@@ -33,6 +33,9 @@ function Statistic({
 }
 
 export function SpotlightProjectCard({ project }: { project: Project }) {
+  if (project === undefined) {
+    return
+  }
   const { data: metadata } = useProjectMetadata(project.metadataUri)
 
   const percentageGain = useProjectTrendingPercentageIncrease({
