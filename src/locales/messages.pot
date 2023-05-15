@@ -1619,6 +1619,9 @@ msgstr ""
 msgid "Recipient address"
 msgstr ""
 
+msgid "<0>1 Dao Protocol is a programmable crypto fundraising platform for web3. It helps people fund, operate, and scale their projects transparently using the Arbitrum blockchain, which is a type of programmable cryptocurrency.</0><1>1 Dao Protocol is funded and owned by its community.</1><2>1 Dao Protocol is forked from the Juicebox protocol.</2>"
+msgstr ""
+
 msgid "{0} is required"
 msgstr ""
 
@@ -3236,6 +3239,9 @@ msgstr ""
 msgid "If you don't raise the sum of your payouts (<0/>{distributionLimit}), this address will receive {0}% of the ETH you raise."
 msgstr ""
 
+msgid "What's 1 Dao Protocol?"
+msgstr ""
+
 msgid "Burn {0} {tokensTextShort}"
 msgstr ""
 
@@ -3507,9 +3513,6 @@ msgid "Community-owned"
 msgstr ""
 
 msgid "Owner tools"
-msgstr ""
-
-msgid "<0>Juicebox is a programmable crypto fundraising platform for web3. It helps people fund, operate, and scale their projects transparently using Ethereum, which is a type of programmable cryptocurrency.</0><1>Juicebox is funded and owned by its community.</1>"
 msgstr ""
 
 msgid "Payouts to other Juicebox projects don't incur fees. A 2.5% fee is taken out of all other payouts. You will receive the <0>JuiceboxDAO governance token</0> when you pay fees. <1>Learn more</1>."
@@ -4149,9 +4152,6 @@ msgid "If you have <0/> or <1/> legacy Juicebox projects, we recommend you migra
 msgstr ""
 
 msgid "Message sent!"
-msgstr ""
-
-msgid "What's Juicebox?"
 msgstr ""
 
 msgid "Current 3rd Party Exchange Rates"
