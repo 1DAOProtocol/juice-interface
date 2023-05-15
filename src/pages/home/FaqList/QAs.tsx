@@ -40,15 +40,17 @@ export default function QAs(): {
     },
     {
       id: 'what-is-juicebox',
-      q: <Trans>What's Juicebox?</Trans>,
+      q: <Trans>What's 1 Dao Protocol?</Trans>,
       a: (
         <Trans>
           <p>
-            Juicebox is a programmable crypto fundraising platform for web3. It
-            helps people fund, operate, and scale their projects transparently
-            using Ethereum, which is a type of programmable cryptocurrency.
+            1 Dao Protocol is a programmable crypto fundraising platform for
+            web3. It helps people fund, operate, and scale their projects
+            transparently using the Arbitrum blockchain, which is a type of
+            programmable cryptocurrency.
           </p>
-          <p>Juicebox is funded and owned by its community.</p>
+          <p>1 Dao Protocol is funded and owned by its community.</p>
+          <p>1 Dao Protocol is forked from the Juicebox protocol.</p>
         </Trans>
       ),
     },
