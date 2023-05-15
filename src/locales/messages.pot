@@ -1451,6 +1451,9 @@ msgstr ""
 msgid "Balance exceeded"
 msgstr ""
 
+msgid "Join thousands of projects using 1 DAO Protocol to fund, operate, and scale their ideas & communities transparently on Arbitrum."
+msgstr ""
+
 msgid "Set aside a percentage of freshly minted NFTs."
 msgstr ""
 
@@ -1530,9 +1533,6 @@ msgid "Version of the terminal contract used by this project."
 msgstr ""
 
 msgid "This cycle's payouts"
-msgstr ""
-
-msgid "<0>This website interacts with the Arbitrum blockchain — to use it, you'll need to have a wallet and some ETH (ETH is the main currency on Arbitrum). You can get a free wallet from <1>MetaMask.io</1>, and buy ETH from within the wallet by using a credit card.</0>"
 msgstr ""
 
 msgid "Set up token migration"
@@ -1889,7 +1889,7 @@ msgstr ""
 msgid "Redeem your NFTs to reclaim a portion of the ETH that isn't needed for payouts. This cycle's <0>redemption rate</0> determines how much ETH you will receive."
 msgstr ""
 
-msgid "Juicebox is an open-source protocol that is transparent, community-owned, and built on the Arbitrum blockchain."
+msgid "Juicebox is an open-source protocol that is transparent, community-owned, and built on the Ethereum blockchain."
 msgstr ""
 
 msgid "Configuration rules"
@@ -2123,6 +2123,9 @@ msgstr ""
 msgid "No, keep editing"
 msgstr ""
 
+msgid "<0>This website interacts with the Arbitrum blockchain — to use it, you'll need to have a wallet and some ETH (ETH is the main currency on Arbitrum). You can get a free wallet from <1>MetaMask.io</1>, and buy ETH from within the wallet by using a credit card.</0>"
+msgstr ""
+
 msgid "While enabled, the project owner can migrate the project's current <0>controller</0> to another version of the contract."
 msgstr ""
 
@@ -2142,9 +2145,6 @@ msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr ""
 
 msgid "Deployed a project payer address"
-msgstr ""
-
-msgid "Join thousands of projects using Juicebox to fund, operate, and scale their ideas & communities transparently on Arbitrum."
 msgstr ""
 
 msgid "Percent"
@@ -3293,7 +3293,7 @@ msgstr ""
 msgid "Transfer ownership of {projectTitle}"
 msgstr ""
 
-msgid "Open a full-featured Arbitrum treasury with programmable spending in minutes."
+msgid "Open a full-featured Ethereum treasury with programmable spending in minutes."
 msgstr ""
 
 msgid "Edit deadline:"
