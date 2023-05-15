@@ -1,11 +1,11 @@
 {
-  "title": "Juicebox | Crypto Fundraising & DAO Management",
-  "titleTemplate": "%s | Juicebox",
-  "description": "Juicebox is the programmable funding platform for crypto and web3. Fund, operate, and scale your project transparently. Community DAO owned, on Ethereum.",
+  "title": "1 DAO Protocol | Crypto Fundraising & DAO Management",
+  "titleTemplate": "%s | 1 DAO Template",
+  "description": "1 DAO Protocol is a programmable funding platform for crypto and web3. Fund, operate, and scale your project transparently. Community DAO owned, on Arbitrum.",
   "twitter": {
-    "handle": "@juiceboxETH",
-    "site": "https://juicebox.money",
-    "creator": "@juiceboxETH",
+    "handle": "@1daoprotocol",
+    "site": "https://1dao.finance",
+    "creator": "@1daoprotocol",
     "cardType": "summary_large_image",
     "image": "https://juicebox.money/assets/JBM-Unfurl-banner.png"
   }
