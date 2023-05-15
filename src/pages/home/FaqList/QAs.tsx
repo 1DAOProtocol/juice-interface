@@ -29,9 +29,9 @@ export default function QAs(): {
       a: (
         <Trans>
           <p>
-            This website interacts with the Ethereum blockchain — to use it,
+            This website interacts with the Arbitrum blockchain — to use it,
             you'll need to have a wallet and some ETH (ETH is the main currency
-            on Ethereum). You can get a free wallet from{' '}
+            on Arbitrum). You can get a free wallet from{' '}
             <ExternalLink href="https://metamask.io">MetaMask.io</ExternalLink>,
             and buy ETH from within the wallet by using a credit card.
           </p>

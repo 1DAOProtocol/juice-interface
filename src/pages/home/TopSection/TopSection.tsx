@@ -58,8 +58,8 @@ export function TopSection() {
         heading={<Trans>Fund your thing</Trans>}
         subheading={
           <Trans>
-            Join thousands of projects using Juicebox to fund, operate, and
-            scale their ideas & communities transparently on Ethereum.
+            Join thousands of projects using 1 DAO Protocol to fund, operate,
+            and scale their ideas & communities transparently on Arbitrum.
           </Trans>
         }
       />

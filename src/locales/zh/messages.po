@@ -1537,7 +1537,7 @@ msgstr "当前项目所使用的 Terminal 版本。"
 msgid "This cycle's payouts"
 msgstr "本周期的支出"
 
-msgid "<0>This website interacts with the Ethereum blockchain — to use it, you'll need to have a wallet and some ETH (ETH is the main currency on Ethereum). You can get a free wallet from <1>MetaMask.io</1>, and buy ETH from within the wallet by using a credit card.</0>"
+msgid "<0>This website interacts with the Arbitrum blockchain — to use it, you'll need to have a wallet and some ETH (ETH is the main currency on Arbitrum). You can get a free wallet from <1>MetaMask.io</1>, and buy ETH from within the wallet by using a credit card.</0>"
 msgstr "<0>本网站与以太坊区块链交互 — 要使用它，你将需要一个钱包及一些 ETH (ETH 是以太坊上的主要货币)。 你可以在 <1>MetaMask.io</1>获得一个免费钱包， 并使用信用卡在钱包内购买 ETH。</0>"
 
 msgid "Set up token migration"
@@ -2149,7 +2149,7 @@ msgstr "<0>{tokenSymbol} ERC-20 地址：</0><1/>"
 msgid "Deployed a project payer address"
 msgstr "部署了一个项目支付地址"
 
-msgid "Join thousands of projects using Juicebox to fund, operate, and scale their ideas & communities transparently on Ethereum."
+msgid "Join thousands of projects using Juicebox to fund, operate, and scale their ideas & communities transparently on Arbitrum."
 msgstr "加入数千个使用 Juicebox 在以太坊上透明地筹款、运营和扩展其想法和社区的项目。"
 
 msgid "Percent"
