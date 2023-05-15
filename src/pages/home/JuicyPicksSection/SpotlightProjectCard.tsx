@@ -34,7 +34,7 @@ function Statistic({
 
 export function SpotlightProjectCard({ project }: { project: Project }) {
   if (project === undefined) {
-    return
+    return null
   }
   const { data: metadata } = useProjectMetadata(project.metadataUri)
 
