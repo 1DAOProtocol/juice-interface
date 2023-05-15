@@ -192,7 +192,7 @@ const LinkColumn: React.FC<
 )
 
 const AppVersion = ({ gitCommit }: { gitCommit: string }) => {
-  const gitCommitLink = `https://github.com/jbx-protocol/juice-interface/commit/${gitCommit}`
+  const gitCommitLink = `https://github.com/1DAOProtocol/juice-interface/commit/${gitCommit}`
   return (
     <div className="text-slate-200">
       Version:{' '}
