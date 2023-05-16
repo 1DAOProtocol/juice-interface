@@ -299,9 +299,6 @@ msgstr ""
 msgid "Transferred ETH to project"
 msgstr ""
 
-msgid "Add to Metamask"
-msgstr ""
-
 msgid "You must grant permission to migrate your V1 tokens."
 msgstr ""
 
@@ -1026,9 +1023,6 @@ msgid "Pay button text"
 msgstr ""
 
 msgid "Limited (1,050 ETH)"
-msgstr ""
-
-msgid "Tier-based on-chain governance"
 msgstr ""
 
 msgid "Your total legacy tokens"
@@ -2051,9 +2045,6 @@ msgstr ""
 msgid "Migrate controller"
 msgstr ""
 
-msgid "Instead of tracking total voting power, track each address' voting power within each tier over time. This can be useful for running multiple voting processes out of one treasury, or for complex on-chain governance.<0>Learn more.</0>"
-msgstr ""
-
 msgid "Sent reserved tokens"
 msgstr ""
 
@@ -2154,9 +2145,6 @@ msgid "Percent"
 msgstr ""
 
 msgid "When enabled, fees are held in the project instead of being processed automatically. <0>Learn more.</0>"
-msgstr ""
-
-msgid "Track the historical voting weight of each token holder within each tier of NFTs. <0>Learn more.</0>"
 msgstr ""
 
 msgid "No, keep"
@@ -2795,6 +2783,9 @@ msgstr ""
 msgid "Twitter handle"
 msgstr ""
 
+msgid "<0/> fee"
+msgstr ""
+
 msgid "Payments to this project are paused in this cycle."
 msgstr ""
 
@@ -3165,9 +3156,6 @@ msgid "You will receive <0/>"
 msgstr ""
 
 msgid "Start over"
-msgstr ""
-
-msgid "<0/>fee"
 msgstr ""
 
 msgid "Notifications"
