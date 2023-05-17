@@ -230,9 +230,6 @@ msgstr ""
 msgid "How do I decide?"
 msgstr ""
 
-msgid "Go to settings"
-msgstr ""
-
 msgid "<0>Issuance reduction rate</0>. This allows you to predictably reduce your project token's issuance rate (tokens per ETH) over time without needing to manually edit your cycle."
 msgstr ""
 
@@ -635,9 +632,6 @@ msgstr ""
 msgid "Project token"
 msgstr ""
 
-msgid "Got it"
-msgstr ""
-
 msgid "Setup new NFTs for {projectTitle}"
 msgstr ""
 
@@ -798,9 +792,6 @@ msgid "Skipped"
 msgstr ""
 
 msgid "Set operator for {projectTitle}"
-msgstr ""
-
-msgid "Edit profile"
 msgstr ""
 
 msgid "Payouts will be sent to:"
@@ -2648,6 +2639,9 @@ msgstr ""
 msgid "Transfer unclaimed {0}"
 msgstr ""
 
+msgid "Cannot set payouts because your <0>Total payouts</0> is Zero."
+msgstr ""
+
 msgid "The onchain memo for each payment made through this address. The project's payment feed will include the memo alongside the payment."
 msgstr ""
 
@@ -2718,9 +2712,6 @@ msgid "Your project can't receive payments through the juicebox.money app."
 msgstr ""
 
 msgid "Mint {tokensTokenLower}"
-msgstr ""
-
-msgid "You can now search for projects by their name, description, and tags, as well as their @handle."
 msgstr ""
 
 msgid "<0>Note:</0> These properties are locked during each cycle. They can only be edited for <1>upcoming</1> cycles."
@@ -3090,9 +3081,6 @@ msgid "Upload CSV"
 msgstr ""
 
 msgid "{tokenTextSingular} recipients"
-msgstr ""
-
-msgid "You can now add tags in settings to describe your project, and help supporters find it. Anyone can search for projects by tag on the Explore page."
 msgstr ""
 
 msgid "Will be rounded to <0/>{0}"
@@ -3479,9 +3467,6 @@ msgstr ""
 msgid "Limited supply"
 msgstr ""
 
-msgid "Contact JuiceboxDAO for feature requests, support, or project advice."
-msgstr ""
-
 msgid "How long one cycle will last. Your project's rules are locked during each cycle. Edits you make to your project's rules during a cycle will only take effect at the start of the next cycle."
 msgstr ""
 
@@ -3737,9 +3722,6 @@ msgstr ""
 msgid "Allow the <0>Juicebox NFT deployer contract</0> to edit this project's cycle."
 msgstr ""
 
-msgid "Complete your Juicebox profile to enjoy a personalized and seamless experience on our platform."
-msgstr ""
-
 msgid "Fun"
 msgstr ""
 
@@ -3921,9 +3903,6 @@ msgid "Date created"
 msgstr ""
 
 msgid "What happens when I pay a project?"
-msgstr ""
-
-msgid "Improved search"
 msgstr ""
 
 msgid "Redemption rate:"

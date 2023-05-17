@@ -17,7 +17,7 @@ import { Allocation, AllocationSplit } from './Allocation'
 
 type AddButtonSize = 'small' | 'large'
 
-const allocationId = (
+export const allocationId = (
   beneficiary: string,
   projectIdHex: string | undefined,
 ) => {
@@ -148,7 +148,7 @@ export const AllocationList = ({
           const allocation = entityToAllocation(result, undefined)
           upsertAllocation(allocation)
         } else {
-          if (!setTotalAllocationAmount) {
+          if (!totalAllocationAmount) {
             throw new Error(
               'Allocation amount passed but AllocationList has no totalAllocationAmount set',
             )
@@ -157,12 +157,10 @@ export const AllocationList = ({
           const originalTotal = parseFloat(
             fromWad(totalAllocationAmount ?? BigNumber.from(0)),
           )
-          const id = allocationId(
-            result.beneficiary!,
-            projectIdToHex(result.projectId),
-          )
+
+          // checks original ID
           const existingAllocation = isEditing
-            ? allocations.find(a => a.id === id)
+            ? allocations.find(a => a.id === result.previousId)
             : undefined
 
           let totalAmount = originalTotal
@@ -173,7 +171,13 @@ export const AllocationList = ({
             totalAmount = Math.max(0, totalAmount - existingAmount)
           }
           const allocationAmount = parseWad(result.amount.value)
-          const newTotal = parseWad(totalAmount).add(allocationAmount)
+
+          // Only set new total if setTotalAllocationAmount available
+          //   e.g. Edit payouts does not allow setting new total
+          const newTotal = setTotalAllocationAmount
+            ? parseWad(totalAmount).add(allocationAmount)
+            : parseWad(originalTotal)
+
           const newOrEditedAllocation = entityToAllocation(result, newTotal)
 
           let newAllocationInserted = false
@@ -203,7 +207,7 @@ export const AllocationList = ({
             // Only insert new if it wasn't added previously
             ...(newAllocationInserted ? [] : [newOrEditedAllocation]),
           ])
-          setTotalAllocationAmount(newTotal)
+          setTotalAllocationAmount?.(newTotal)
         }
       }
 
@@ -221,7 +225,6 @@ export const AllocationList = ({
       upsertAllocation,
     ],
   )
-
   const onModalCancel = useCallback(() => {
     modal.close()
     setSelectedAllocation(undefined)
