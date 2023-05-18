@@ -31,6 +31,10 @@ export async function loadJBPrices({
         '@jbx-protocol/juice-contracts-v3/deployments/goerli/JBPrices.json'
       )
     } else if (readNetwork.name === NetworkName.arbitrumGoerli) {
+      // eslint-disable-next-line no-console
+      console.log(
+        'loadJBPrices - readNetwork.name === NetworkName.arbitrumGoerli; cv === CV_V3',
+      )
       contractJson = await import(
         '@1-dao-protocol/juice-contracts-v3/deployments/arbitrumGoerli/JBPrices.json'
       )
@@ -41,8 +45,12 @@ export async function loadJBPrices({
     }
   }
 
+  // eslint-disable-next-line no-console
+  console.log('loadJBPrices - 2')
   if (!contractJson || !contractJson.address || !contractJson.abi)
     return undefined
 
+  // eslint-disable-next-line no-console
+  console.log('loadJBPrices - 3', contractJson.address)
   return new Contract(contractJson.address, contractJson.abi, readProvider)
 }
