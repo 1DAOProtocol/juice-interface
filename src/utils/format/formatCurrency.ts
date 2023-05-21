@@ -18,6 +18,12 @@ export class CurrencyUtils {
   }
 
   weiToUsd = (wei: BigNumberish | undefined) => {
+    // eslint-disable-next-line no-console
+    console.log('wei:', wei)
+    // eslint-disable-next-line no-console
+    console.log('this.usdPerEth:', this.usdPerEth)
+    // eslint-disable-next-line no-console
+    console.log('this.weiPerUsd:', this.weiPerUsd)
     if (!wei || !this.weiPerUsd) return BigNumber.from(0)
 
     try {

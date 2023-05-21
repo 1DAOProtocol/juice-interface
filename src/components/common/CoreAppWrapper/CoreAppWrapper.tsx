@@ -20,7 +20,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { redirectTo } from 'utils/windowUtils'
 import { WagmiConfig, configureChains, createClient } from 'wagmi'
-import { goerli, mainnet } from 'wagmi/chains'
+import { goerli, mainnet, arbitrumGoerli } from 'wagmi/chains'
 import { SafeConnector } from 'wagmi/connectors/safe'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { infuraProvider } from 'wagmi/providers/infura'
@@ -32,7 +32,10 @@ const LanguageProvider = dynamic(
   },
 )
 
-const chain = readNetwork.name === NetworkName.mainnet ? mainnet : goerli
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let chain: any = mainnet
+if (readNetwork.name === NetworkName.goerli) chain = goerli
+if (readNetwork.name === NetworkName.arbitrumGoerli) chain = arbitrumGoerli
 
 const { chains, provider } = configureChains(
   [chain],
