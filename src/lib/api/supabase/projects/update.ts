@@ -40,6 +40,9 @@ export async function updateDBProjects(
       keys: sgDbCompareKeys,
     })
 
+    // eslint-disable-next-line no-console
+    console.log('update.ts - sgProjects:', sgProjects)
+
     // Determine which subgraph projects have changed from what we have stored in the database
     const {
       changedSubgraphProjects,

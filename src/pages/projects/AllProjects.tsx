@@ -4,7 +4,7 @@ import Loading from 'components/Loading'
 import ProjectCard from 'components/ProjectCard'
 import { useLoadMoreContent } from 'hooks/useLoadMore'
 import { useDBProjectsInfiniteQuery } from 'hooks/useProjects'
-import { DBProjectQueryOpts } from 'models/dbProject'
+import { DBProject, DBProjectQueryOpts } from 'models/dbProject'
 import { ProjectTagName } from 'models/project-tags'
 import { PV } from 'models/pv'
 import { useEffect, useRef } from 'react'
@@ -49,10 +49,22 @@ export default function AllProjects({
     hasNextPage,
   })
 
-  const concatenatedPages = projects?.pages?.reduce(
-    (prev, group) => [...prev, ...group],
-    [],
+  // eslint-disable-next-line no-console
+  console.log('projects?.pages:', projects?.pages)
+  let concatenatedPages: Array<DBProject> = []
+  if (
+    projects?.pages !== undefined &&
+    projects?.pages.length > 0 &&
+    projects?.pages[0] != undefined
   )
+    concatenatedPages = projects?.pages?.reduce(
+      (prev, group) => [...prev, ...group],
+      [],
+    )
+  // const concatenatedPages = projects?.pages?.reduce(
+  //   (prev, group) => [...prev, ...group],
+  //   [],
+  // )
 
   useEffect(() => {
     if (scrolledToBottom) {

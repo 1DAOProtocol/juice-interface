@@ -22,5 +22,7 @@ export const subgraphUri = () => {
   if (url.pathname.match(/graphql$/g)) {
     return url.href.slice(0, url.href.lastIndexOf('/'))
   }
+  // eslint-disable-next-line no-console
+  console.log('subgraphUri:', url.href)
   return url.href
 }

@@ -2,6 +2,19 @@
 # yarn lockfile v1
 
 
+"@1-dao-protocol/juice-721-delegate-v3-2@npm:@1-dao-protocol/juice-721-delegate@6.0.3":
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/@1-dao-protocol/juice-721-delegate/-/juice-721-delegate-6.0.3.tgz#f3fb368eedb641577ed075dabbc86c8c20ce61b3"
+  integrity sha512-TQJS3kSbMpLj2eWdc+QDdquL5b8Ir36Mc5lgrx/zEkPgEQ3/WqLaGTZO+oDuIMYNXm1u51DoT4dDOuQ5xLrJMg==
+  dependencies:
+    "@1-dao-protocol/juice-delegates-registry" "1.0.2"
+    "@jbx-protocol/juice-contracts-v3" "^2.0.4"
+    "@jbx-protocol/juice-delegates-registry" "^1.0.0"
+    "@jbx-protocol/juice-ownable" "https://github.com/jbx-protocol/juice-ownable"
+    "@openzeppelin/contracts" "^4.6.0"
+    "@paulrberg/contracts" "^3.7.0"
+    prb-math "^2.4.3"
+
 "@1-dao-protocol/juice-contracts-v3@3.1.2":
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@1-dao-protocol/juice-contracts-v3/-/juice-contracts-v3-3.1.2.tgz#e212382c61b4421f5e35cb4aa49239915169d63b"
@@ -2983,6 +2996,13 @@
     "@jbx-protocol/juice-contracts-v3" "^2.0.3"
     "@openzeppelin/contracts" "^4.8.0"
     "@paulrberg/contracts" "^3.7.0"
+
+"@jbx-protocol/juice-ownable@git+https://github.com/jbx-protocol/juice-ownable.git":
+  version "0.0.2"
+  resolved "git+https://github.com/jbx-protocol/juice-ownable.git#b2f98133c7bea013db967e8a204ce0d9cc06d21f"
+  dependencies:
+    "@jbx-protocol/juice-contracts-v3" "^2.0.2"
+    "@openzeppelin/contracts" "^4.8.0"
 
 "@jbx-protocol/juice-ownable@https://github.com/jbx-protocol/juice-ownable":
   version "0.0.2"

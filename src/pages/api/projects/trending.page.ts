@@ -28,19 +28,28 @@ const ARCHIVED_SUBGRAPH_IDS = [
 const handler: NextApiHandler = async (req, res) => {
   const rawFirst = req.query.count // TODO probably can use Yup for this
   const first = typeof rawFirst === 'string' ? parseInt(rawFirst) : undefined
+  // eslint-disable-next-line no-console
+  console.log(
+    'trending.page.ts - handler - TrendingProjectsDocument:',
+    TrendingProjectsDocument.loc?.source.body,
+    ARCHIVED_SUBGRAPH_IDS,
+  )
   try {
     const projectsRes = await client.query<ProjectsQuery, QueryProjectsArgs>({
       query: TrendingProjectsDocument,
       variables: {
-        where: {
-          // trendingScore_gt: '0', // Turned off because there wasn't sufficient number of projects to fulfill `first`.
-          id_not_in: ARCHIVED_SUBGRAPH_IDS,
-        },
+        // TODO temp comment to get the TRENDING tab populated
+        // where: {
+        //   // trendingScore_gt: '0', // Turned off because there wasn't sufficient number of projects to fulfill `first`.
+        //   id_not_in: ARCHIVED_SUBGRAPH_IDS,
+        // },
         first,
         orderBy: Project_OrderBy.trendingScore,
         orderDirection: OrderDirection.desc,
       },
     })
+    // eslint-disable-next-line no-console
+    console.log('trending.page.ts - handler - projectsRes:', projectsRes)
 
     res.setHeader(
       'Cache-Control',

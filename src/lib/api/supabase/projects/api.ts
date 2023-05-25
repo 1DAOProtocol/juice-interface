@@ -24,6 +24,8 @@ export function dbpQueryAll() {
  * @param records Projects to write
  */
 export async function writeDBProjects(records: Json<DBProject>[]) {
+  // eslint-disable-next-line no-console
+  console.log('writeDBProjects:', records)
   // Sanity check that all IDs are defined
   const missingIds = records.filter(r => r.id === undefined || r.id === null)
 
@@ -57,6 +59,12 @@ export async function queryDBProjects(
   res: NextApiResponse,
   opts: DBProjectQueryOpts,
 ) {
+  // eslint-disable-next-line no-console
+  console.log('supabase - req:', req)
+  // eslint-disable-next-line no-console
+  console.log('supabase - res:', res)
+  // eslint-disable-next-line no-console
+  console.log('supabase - opts:', opts)
   const orderBy = opts.orderBy ?? 'total_paid'
   const page = opts.page ?? 0
   const pageSize = opts.pageSize ?? 20
@@ -68,6 +76,8 @@ export async function queryDBProjects(
   const supabase = createServerSupabaseClient<Database>({ req, res }).from(
     'projects',
   )
+  // eslint-disable-next-line no-console
+  console.log('supabase - supabase:', supabase)
 
   let query = supabase
     .select('*')
@@ -81,6 +91,8 @@ export async function queryDBProjects(
   if (opts.tags?.length) query = query.overlaps('tags', opts.tags)
   if (searchFilter) query = query.or(searchFilter)
 
+  // eslint-disable-next-line no-console
+  console.log('supabase - query:', query)
   return query
 }
 

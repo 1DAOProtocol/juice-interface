@@ -58,6 +58,7 @@
     "node": ">=16.0.0 <17.0.0"
   },
   "dependencies": {
+    "@1-dao-protocol/juice-721-delegate-v3-2": "npm:@1-dao-protocol/juice-721-delegate@6.0.3",
     "@1-dao-protocol/juice-contracts-v3": "3.1.4",
     "@1-dao-protocol/juice-delegates-registry": "1.0.2",
     "@apollo/client": "3.6.9",

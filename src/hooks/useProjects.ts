@@ -203,8 +203,13 @@ export function useDBProjectsInfiniteQuery(
       ...reactQueryOptions,
       // Don't allow this function to be overwritten by reactQueryOptions
       getNextPageParam: (lastPage, allPages) => {
+        // eslint-disable-next-line no-console
+        console.log('lastPage:', lastPage)
+        // eslint-disable-next-line no-console
+        console.log('allPages:', allPages)
         // If the last page contains less than the expected page size,
         // it's safe to assume you're at the end.
+        if (lastPage === undefined) return false
         if (opts.pageSize && lastPage.length < opts.pageSize) {
           return false
         } else {
