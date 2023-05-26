@@ -9,7 +9,7 @@ import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
-import PrefixedInput from 'components/PrefixedInput'
+import PrefixedInput from 'components/inputs/PrefixedInput'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
@@ -181,11 +181,9 @@ export const ProjectDetailsPage: React.FC<
       <div className="mt-12 text-center">
         <Trans>Need help?</Trans>
         <div>
-          <Link href="/contact">
-            <a className="text-sm hover:underline">
-              <Trans>Contact a contributor</Trans>{' '}
-              <RightOutlined className="text-xs" />
-            </a>
+          <Link href="/contact" className="text-sm hover:underline">
+            <Trans>Contact a contributor</Trans>{' '}
+            <RightOutlined className="text-xs" />
           </Link>
         </div>
       </div>

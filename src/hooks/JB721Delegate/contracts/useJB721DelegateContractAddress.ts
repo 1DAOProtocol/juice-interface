@@ -4,10 +4,7 @@ import { JB721DelegateVersion } from 'models/nftRewards'
 import { useEffect, useState } from 'react'
 import { NetworkName } from '../../../models/networkName'
 
-export async function loadJB721DelegateDeployment(
-  version: JB721DelegateVersion,
-) {
-  console.info('AAAAAAAAAAAAAAAAAAAAAAAA - loadJB721DelegateDeployment')
+async function loadJB721DelegateDeployment(version: JB721DelegateVersion) {
   if (readNetwork.name === NetworkName.arbitrumGoerli)
     return (await import(
       `@1-dao-protocol/juice-721-delegate-v${version}/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`

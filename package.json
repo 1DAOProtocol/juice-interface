@@ -55,7 +55,7 @@
     ]
   },
   "engines": {
-    "node": ">=16.0.0 <17.0.0"
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "@1-dao-protocol/juice-721-delegate-v3-2": "npm:@1-dao-protocol/juice-721-delegate@6.0.3",
@@ -108,6 +108,7 @@
     "bottleneck": "^2.19.5",
     "discord.js": "^14.9.0",
     "erc-20-abi": "^1.0.0",
+    "eslint-config-next": "^13.4.3",
     "ethereum-block-by-date": "1.4.6",
     "ethers": "^5.7.0",
     "formidable": "^2.0.1",
@@ -119,7 +120,7 @@
     "lodash": "^4.17.21",
     "mjml": "^4.13.0",
     "mustache": "^4.2.0",
-    "next": "12.2.2",
+    "next": "^13.4.3",
     "object-hash": "^3.0.0",
     "pino": "^8.11.0",
     "pino-pretty": "^10.0.0",
@@ -127,8 +128,8 @@
     "postmark": "^3.0.15",
     "qs": "^6.11.0",
     "qwestive-client-sdk": "0.1.11",
-    "react": "^18",
-    "react-dom": "^18.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-query": "^3.33.2",
     "react-redux": "^8",
     "react-stop-propagation": "^0.2.0",

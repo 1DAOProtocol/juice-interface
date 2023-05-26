@@ -81,7 +81,7 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
             value={project.paymentsCount}
           />
           <Statistic
-            name={<Trans>Last 7 days</Trans>}
+            name={<Trans>Last 30 days</Trans>}
             value={<span className="text-melon-600">{percentGainText}</span>}
           />
         </div>
@@ -100,12 +100,10 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
             handle: project.handle,
           })}
         >
-          <a>
-            <Button>
-              <Trans>Go to project</Trans>
-              <ArrowRightIcon className="ml-2 inline h-4 w-4" />
-            </Button>
-          </a>
+          <Button>
+            <Trans>Go to project</Trans>
+            <ArrowRightIcon className="ml-2 inline h-4 w-4" />
+          </Button>
         </Link>
       </div>
     </div>

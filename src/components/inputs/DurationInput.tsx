@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
-import { DurationUnitsOption } from 'constants/time'
+import { DurationUnitsOption } from 'models/time'
 import { ChangeEvent } from 'react'
 import { JuiceListbox } from './JuiceListbox'
 
@@ -67,7 +67,7 @@ interface DurationOption {
   value: DurationUnitsOption
 }
 
-const durationOptions = (): DurationOption[] => [
+export const durationOptions = (): DurationOption[] => [
   { label: t`Days`, value: 'days' },
   { label: t`Hours`, value: 'hours' },
   { label: t`Minutes`, value: 'minutes' },
